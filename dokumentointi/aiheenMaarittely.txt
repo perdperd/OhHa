@@ -1,0 +1,42 @@
+Aihe: Go-peliohjelma
+
+Toteutetaan ohjelma, joka mahdollistaa gon pelaamisen kahden pelaajan kesken tai (erittäin yksinkertaista) tietokonevastustajaa vastaan.
+Ohjelma tulee toteuttamaan kaikki pelin säännöt ja hoitamaan pisteiden laskemisen pelin lopussa. Tarkoituksena on myös mahdollistaa
+pelattujen pelien tallentaminen ja läpikäynti jälkikäteen.
+
+Käyttäjät: pelaaja(t), pelin läpikäyjä
+
+Pelaajan toiminnot:
+
+- uuden pelin aloittaminen
+  - pelaaja valitsee laudan koon, mahdolliset tasoituskivet ja komin
+
+- kiven laittaminen laudalle
+
+  - onnistuu jos siirto laillinen
+
+- passaaminen
+
+- siirron ottaminen takaisin
+
+- luovuttaminen
+
+- pelin pisteyttäminen
+
+  - pelaaja merkitsee kuolleet kivet, tietokone pisteyttää
+
+- pelin tallentaminen
+
+Pelin läpikäyjän toiminnot:
+
+- läpikäytävän pelin valitseminen
+
+- siirtyminen seuraavaan siirtoon
+
+- siirtyminen edelliseen siirtoon
+
+- siirtyminen ensimmäisen siirtoon
+
+- siirtyminen viimeiseen siirtoon
+
+- kommenttien lisääminen peliin
