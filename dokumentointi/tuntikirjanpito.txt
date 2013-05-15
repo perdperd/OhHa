@@ -3,3 +3,11 @@
 Käyttämä aika: 1h
 
 Ajankäytön kohde: Githubiin tunnusten luominen, gitillä kikkailu ja aihemäärittelyn luominen
+
+15.1.2013
+
+Käyttämä aika: ainakin 3h? huonosti tuli pidettyä lukua
+
+Ajankäytön kohde: Peruspelilogiikan toteutus, mahdollistin ryhmien yhdistämisen ja toteutin niille vapaudet, 
+minkä ansiosta kivien syömisen toteutus tulee olemaan helppoa. Lisäksi tein näille ryhmille ja pelilaudalle testejä.
+Lisäksi erittäin alustavan luokkakaavion teko.
