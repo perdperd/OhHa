@@ -170,6 +170,11 @@ public class Pelilauta {
         }
     }
     
+    /*
+     * metodi käy kohdan [x][y] naapurit läpi ja lisää niille vapauden, jos ne
+     * eivät ole samaa ryhmää kuin ryhmanNumero
+     */
+    
     public void lisaaPoistettavanKivenVihollisnaapureilleVapaudeksiPoistettavaKivi(int x, int y, int ryhmanNumero) {
         for (int i = 0; i<naapurit.length; i++) {
             int naapurix = x + naapurit[i][0];
@@ -182,6 +187,13 @@ public class Pelilauta {
             }
          }
     }
+    
+    /*
+     * metodi tutkii söisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
+     * kiviä. tämän metodi tekee tutkimalla onko kohdalla [x][y] naapureina
+     * ryhmiä, joiden väri ei ole sama kuin vari ja joiden vapauksien määrä on 
+     * 1. tällöin metodi palauttaa true. muuten metodi palauttaa false.
+     */
     
     public boolean siirtoSyoRyhmia(int x, int y, int vari) {
         for (int i = 0; i<naapurit.length; i++) {
@@ -198,6 +210,14 @@ public class Pelilauta {
         return false;
     }
     
+    /*
+     * metodi tutkii olisiko kohtaan [x][y] laitettu kivi, jonka vari on vari,
+     * laillinen sillä oletuksella, että siirto ei syö kiviä. metodi tekee tämän
+     * tutkimalla onko kohdalla [x][y] naapureina kohtia, joissa on luku 0 (eli
+     * vapauksia), tai kohtia, joissa on samanvärinen ryhmä, jolla on yli yksi vapaus.
+     * tässä tapauksessa palautetaan true. muuten palautetaan false.
+     */
+    
     public boolean siirtoEiSyoRyhmiaMuttaOnLaillinen(int x, int y, int vari) {
         for (int i = 0; i<naapurit.length; i++) {
             int naapurix = x + naapurit[i][0];
@@ -212,10 +232,28 @@ public class Pelilauta {
         return false;
     }
     
+    /*
+     * metodi tutkii olisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
+     * laillinen siirto. ensiksi katsotaan, onko käynnissä kota ja onko kohta
+     * [x][y] kohta, josta ko viimeksi syötiin. tässä tapauksessa palautetaan false.
+     * muuten palautetaan siirtoSyoRyhmia(x,y,vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari)
+     */
+    
     public boolean siirtoOnLaillinen(int x, int y, int vari) {
         if (koKaynnissa && x == koX && y == koY) return false;
         return (siirtoSyoRyhmia(x, y, vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari));
     }
+    
+    /*
+     * metodi tutkii, aloittaisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
+     * kon. tämä tehdään käymällä kohdan [x][y] naapurit läpi. jos kohdalla on naapurina
+     * vapaus tai samanvärinen ryhmä kuin vari, palautetaan false. jos kohdalla
+     * on naapurina erivärinen ryhmä, tutkitaan ovatko sen vapaudet 1. jos näin
+     * on ja ryhmä sisältää yli yhden kiven, kyseessä ei ole ko ja palautetaan false.
+     * jos taas ryhmä sisältää vain yhden kiven, kasvatetaan laskuria
+     * syotavienYhdenKivenRyhmienMaara. lopuksi palautetaan true jos
+     * tämä laskuri on 1, muuten palautetaan false.
+     */
     
     public boolean siirtoOnKo(int x, int y, int vari) {
         int syotavienYhdenKivenRyhmienMaara = 0;
@@ -241,6 +279,12 @@ public class Pelilauta {
         return syotavienYhdenKivenRyhmienMaara == 1;
     }
     
+    /*
+     * metodi syö kohdan [x][y] ympäriltä kaikki ryhmät, joiden väri ei ole vari
+     * ja joiden vapauksien määrä on 1. tämä tehdään kutsumalla metodia poistaRyhmaLaudalta
+     * parametrina ymparoivan ryhman numero.
+     */
+    
     public void syoVastustajanRyhmatYmparilta(int x, int y, int vari) {
         for (int i = 0; i<naapurit.length; i++) {
             int naapurix = x + naapurit[i][0];
@@ -254,6 +298,13 @@ public class Pelilauta {
             }
         }
     }
+    
+    /*
+     * metodi koittaa etsiä kohdan [x][y] naapureista ryhmän, jonka väri on sama
+     * kuin vari. jos tällainen löytyy, kutsutaan metodia lisaaKiviRyhmaan
+     * parametreina x,y ja ryhmanNumero ja palautetaan true. muussa tapauksessa
+     * palautetaan false.
+     */
     
     public boolean yhdistaKiviJohonkinYmparoivaanRyhmaan(int x, int y, int vari) {
         for (int i = 0; i<naapurit.length; i++) {
@@ -273,6 +324,12 @@ public class Pelilauta {
         return false;
     }
     
+    /*
+     * metodi etsii kohdan [x][y] naapureista ryhmiä, joiden väri on sama kuin
+     * kohdan [x][y] ryhmän. jos tällainen löytyy, kutsutaan metodia yhdistaKaksiRyhmaa
+     * parametreina kohdan [x][y] luku ja ympäröivän ryhmän numero
+     */
+    
     public void yhdistaRyhmaYmparoiviinRyhmiin(int x, int y, int vari) {
         int ryhmanNumero1 = lauta[x][y];
         for (int i = 0; i<naapurit.length; i++) {
@@ -289,6 +346,24 @@ public class Pelilauta {
             }
         }
     }
+    
+    /*
+     * metodi tutkii aluksi, onko siirto, joka laitetaan kohtaan [x][y] ja
+     * jonka väri on vari, laillinen. jos näin on, tutkitaan syökö siirto kiviä.
+     * jos siirto syö kiviä, tarkistetaan vielä aloittaako siirto kon. jos näin
+     * on, merkitään että ko on käynnissä ja laitetaan kon x-koordinaatiksi x
+     * ja y-koordinaatiksi y. tämän jälkeen syödään vastustajan ryhmät kohdan [x][y]
+     * ympäriltä.
+     * 
+     * tämän jälkeen koitetaan yhdistää kohdan [x][y] kivi, jonka vari on vari,
+     * johonkin ympäröivään ryhmään. jos tämä onnistui, eli yhdistaKiviJohonkinYmparoivaanRyhmaan
+     * palautti true, yhdistetään vielä kohdan [x][y] ryhmä kaikkiin ympäröiviin ryhmiin.
+     * jos tämä ei onnistunut, luodaan uusi ryhmä, jonka väri on vari, kohtaan [x][y].
+     * 
+     * lopuksi tarkistetaan vielä oliko tämä siirto ollut kon syönti vertaamalla
+     * x:ää koX:ään ja y:tä koY:n. jos jompikumpi näistä eroaa toisesta, merkataan
+     * että ko ei ole enää käynnissä.
+     */
     
     public void laitaSiirto(int x, int y, int vari) {
         if (siirtoOnLaillinen(x,y,vari)) {
