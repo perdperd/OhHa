@@ -11,3 +11,10 @@ Käyttämä aika: ainakin 3h? huonosti tuli pidettyä lukua
 Ajankäytön kohde: Peruspelilogiikan toteutus, mahdollistin ryhmien yhdistämisen ja toteutin niille vapaudet, 
 minkä ansiosta kivien syömisen toteutus tulee olemaan helppoa. Lisäksi tein näille ryhmille ja pelilaudalle testejä.
 Lisäksi erittäin alustavan luokkakaavion teko.
+
+16.2.2013
+
+Käyttämä aika: n. 6h
+
+Ajankäytön kohde: Pelilogiikan toteutuksen vieminen loppuun ja testien luonti uusille syntyneille metodeille.
+Lisäksi lisäsin jonkin verran kommentteja metodeihin.
