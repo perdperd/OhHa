@@ -34,6 +34,10 @@ public class Ryhma {
         return kivet.size();
     }
     
+    /* 
+     * metodi lisää laudan kohtaa [x][y] vastaavan kiven ryhmaan
+     */
+    
     public void lisaaKivi(int x, int y) {
         String kivi = x+"."+y;
         kivet.add(kivi);
@@ -48,6 +52,10 @@ public class Ryhma {
         return vapaudet.size();
     }
     
+    /*
+     * metodi lisää laudan kohtaa [x][y] vastaavan vapauden ryhmään
+     */
+    
     public void lisaaVapaus(int x, int y) {
         String vapaus = x+"."+y;
         vapaudet.add(vapaus);
@@ -56,6 +64,12 @@ public class Ryhma {
     public void poistaVapaus(int x, int y) {
         vapaudet.remove(x+"."+y);
     }
+    
+    /*
+     * metodi yhdistää ryhmän toiseen ryhmään lisäämällä toisen ryhmän kivet ja
+     * vapaudet siihen ja sitten poistamalla vapauksista mahdolliset toisen
+     * ryhmän kivet
+     */
     
     public void yhdistaToiseenRyhmaan(Ryhma ryhma) {
         HashSet<String> toisenVapaudet = ryhma.getVapaudet();
