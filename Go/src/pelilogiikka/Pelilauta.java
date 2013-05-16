@@ -141,8 +141,9 @@ public class Pelilauta {
         ryhma1.yhdistaToiseenRyhmaan(ryhma2);
         HashSet<String> kivet = ryhma2.getKivet();
         for (String s : kivet) {
-            int x = (int) (s.charAt(0)) - 48;
-            int y = (int) (s.charAt(2)) - 48;
+            int pisteenKohta = s.indexOf('.');
+            int x = (int) Integer.parseInt(s.substring(0,pisteenKohta));
+            int y = (int) Integer.parseInt(s.substring(pisteenKohta+1));
             lauta[x][y] = ryhmanNumero1;
         }
     }
@@ -163,8 +164,9 @@ public class Pelilauta {
         } else mustanVangit += ryhma.getKivienMaara();
         HashSet<String> kivet = ryhma.getKivet();
         for (String s : kivet) {
-            int x = (int) (s.charAt(0)) - 48;
-            int y = (int) (s.charAt(2)) - 48;
+            int pisteenKohta = s.indexOf('.');
+            int x = (int) Integer.parseInt(s.substring(0,pisteenKohta));
+            int y = (int) Integer.parseInt(s.substring(pisteenKohta+1));
             lauta[x][y] = 0;
             lisaaPoistettavanKivenVihollisnaapureilleVapaudeksiPoistettavaKivi(x,y,ryhmanNumero);
         }
@@ -234,12 +236,14 @@ public class Pelilauta {
     
     /*
      * metodi tutkii olisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
-     * laillinen siirto. ensiksi katsotaan, onko käynnissä kota ja onko kohta
+     * laillinen siirto. ensiksi katsotaan, onko kohta [x][y] vapaa. jos ei ole,
+     * palautetaan false. Tämän jälkeem katsotaan, onko käynnissä kota ja onko kohta
      * [x][y] kohta, josta ko viimeksi syötiin. tässä tapauksessa palautetaan false.
      * muuten palautetaan siirtoSyoRyhmia(x,y,vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari)
      */
     
     public boolean siirtoOnLaillinen(int x, int y, int vari) {
+        if (lauta[x][y] != 0) return false;
         if (koKaynnissa && x == koX && y == koY) return false;
         return (siirtoSyoRyhmia(x, y, vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari));
     }

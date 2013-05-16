@@ -119,7 +119,7 @@ public class PelilautaTest {
     }
     
     @Test
-    public void paivitaPoistettavaaRyhmaaNaapuroivienVihollistenKivienVapaudetPaivittaaNaapureidenVapaudetOikein() {
+    public void lisaaPoistettavanKivenVihollisnaapureilleVapaudeksiPoistettavaKiviLisaaNaapureidenVapaudetOikein() {
         lauta.luoUusiRyhma(1,1,1);
         lauta.luoUusiRyhma(0,0,1);
         int ryhmanNumero = lauta.getRyhmanNumero(1, 1);
