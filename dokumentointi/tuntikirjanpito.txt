@@ -1,10 +1,10 @@
-14.1.2013
+14.5.2013
 
 Käyttämä aika: 1h
 
 Ajankäytön kohde: Githubiin tunnusten luominen, gitillä kikkailu ja aihemäärittelyn luominen
 
-15.1.2013
+15.5.2013
 
 Käyttämä aika: ainakin 3h? huonosti tuli pidettyä lukua
 
@@ -12,9 +12,15 @@ Ajankäytön kohde: Peruspelilogiikan toteutus, mahdollistin ryhmien yhdistämisen 
 minkä ansiosta kivien syömisen toteutus tulee olemaan helppoa. Lisäksi tein näille ryhmille ja pelilaudalle testejä.
 Lisäksi erittäin alustavan luokkakaavion teko.
 
-16.2.2013
+16.5.2013
 
 Käyttämä aika: n. 6h
 
 Ajankäytön kohde: Pelilogiikan toteutuksen vieminen loppuun ja testien luonti uusille syntyneille metodeille.
 Lisäksi lisäsin jonkin verran kommentteja metodeihin.
+
+22.5.2013
+
+Käyttämä aika: ~5h
+
+Ajankäytön kohde: n. 4h 30 min ohjelmointia ja testien tekemistä, 30 min luokkakaavion uudistamista ja tämän kirjoittamista.
