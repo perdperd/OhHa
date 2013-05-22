@@ -9,6 +9,7 @@ package pelilogiikka;
  * @author Prod
  */
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -19,7 +20,9 @@ public class Pelilauta {
     private int tasoituskivet;
     private int mustanVangit;
     private int valkeanVangit;
-    private ArrayList<Ryhma> ryhmat;
+    private int uudenRyhmanNumero;
+    private HashMap<Integer,Ryhma> ryhmat;
+    private HashSet<Integer> kuolleeksiMerkitytRyhmat;
     private boolean koKaynnissa;
     private int koX;
     private int koY;
@@ -39,9 +42,15 @@ public class Pelilauta {
         }
         this.tasoituskivet = tasoituskivet;
         mustanVangit = valkeanVangit = 0;
-        ryhmat = new ArrayList<Ryhma>();
+        uudenRyhmanNumero = 1;
+        ryhmat = new HashMap<Integer,Ryhma>();
+        kuolleeksiMerkitytRyhmat = new HashSet<Integer>();
         koKaynnissa = false;
         koX = koY = -1;
+    }
+    
+    public int[][] getLauta() {
+        return lauta;
     }
     
     public int getPituus() {
@@ -57,8 +66,33 @@ public class Pelilauta {
     }
     
     public Ryhma getRyhma(int ryhmanNumero) {
-        return ryhmat.get(ryhmanNumero-1);
+        return ryhmat.get(ryhmanNumero);
     }
+    
+    public HashSet<Integer> getKuolleeksiMerkitytRyhmat() {
+        return kuolleeksiMerkitytRyhmat;
+    }
+    
+    public int getMustanVangit() {
+        return mustanVangit;
+    }
+    
+    public int getValkeanVangit() {
+        return valkeanVangit;
+    }
+    
+    public boolean getKoKaynnissa() {
+        return koKaynnissa;
+    }
+    
+    public int getKoX() {
+        return koX;
+    }
+    
+    public int getKoY() {
+        return koY;
+    }
+    
     
     /*
      * metodi lisää laudan kohdassa [x][y] olevan kiven vapaudet ryhmanNumeroa
@@ -106,12 +140,14 @@ public class Pelilauta {
     
     public void luoUusiRyhma(int x, int y, int vari) {
         Ryhma ryhma = new Ryhma(vari);
-        ryhmat.add(ryhma);
-        int ryhmanNumero = ryhmat.size();
+        int ryhmanNumero = vari*uudenRyhmanNumero;
+        ryhmat.put(ryhmanNumero,ryhma);
         lauta[x][y] = ryhmanNumero;
         poistaKiviYmparoivienRyhmienVapauksista(x, y);
         lisaaKivenVapaudetRyhmaan(x,y,ryhmanNumero);
         ryhma.lisaaKivi(x,y);
+        uudenRyhmanNumero++;
+        
     }
     
     /*
@@ -149,9 +185,9 @@ public class Pelilauta {
     }
     
     /*
-     * haetaan ryhmanNumeroa vastaava ryhma ja lisätään sen kivien määrä valkoisen
-     * vankeihin, jos ryhmä on valka. muuten lisätään ne mustan vankeihin.
-     * tämän jälkeen korvataan jokainen laudan kohta [x][y] jossa on luku ryhmanNumero
+     * haetaan ryhmanNumeroa vastaava ryhmä ja lisätään sen kivien määrä valkoisen
+     * vankeihin, jos ryhmä on musta. muuten lisätään ne mustan vankeihin.
+     * tämän jälkeen korvataan jokainen laudan kohta [x][y], jossa on luku ryhmanNumero,
      * nollalla ja lisataan kohdan [x][y] vihollisnaapureille vapaudeksi [x][y].
      */
     
@@ -163,6 +199,7 @@ public class Pelilauta {
             valkeanVangit += ryhma.getKivienMaara();
         } else mustanVangit += ryhma.getKivienMaara();
         HashSet<String> kivet = ryhma.getKivet();
+        ryhmat.remove(ryhmanNumero);
         for (String s : kivet) {
             int pisteenKohta = s.indexOf('.');
             int x = (int) Integer.parseInt(s.substring(0,pisteenKohta));
@@ -235,16 +272,32 @@ public class Pelilauta {
     }
     
     /*
+     * metodi tarkistaa onko kohdan [x][y] naapurina juuri syöty ko. tällöin
+     * kohtaan [x][y] siirron laittaminen on laitonta.
+     */
+    
+    public boolean naapuriOnKoKivi(int x, int y) {
+         for (int i = 0; i<naapurit.length; i++) {
+            int naapurix = x + naapurit[i][0];
+            int naapuriy = y + naapurit[i][1];
+            if (naapurix >= 0 && naapurix < pituus && naapuriy >= 0 && naapuriy < leveys) {
+                if (naapurix == koX && naapuriy == koY) return true;
+            }
+         }
+         return false;
+   }
+    
+    /*
      * metodi tutkii olisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
      * laillinen siirto. ensiksi katsotaan, onko kohta [x][y] vapaa. jos ei ole,
-     * palautetaan false. Tämän jälkeem katsotaan, onko käynnissä kota ja onko kohta
-     * [x][y] kohta, josta ko viimeksi syötiin. tässä tapauksessa palautetaan false.
+     * palautetaan false. Tämän jälkeen katsotaan, onko käynnissä kota ja onko kohdan
+     * [x][y] jokin naapuri kohta, josta ko viimeksi syötiin. tässä tapauksessa palautetaan false.
      * muuten palautetaan siirtoSyoRyhmia(x,y,vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari)
      */
     
     public boolean siirtoOnLaillinen(int x, int y, int vari) {
         if (lauta[x][y] != 0) return false;
-        if (koKaynnissa && x == koX && y == koY) return false;
+        if (koKaynnissa && naapuriOnKoKivi(x,y)) return false;
         return (siirtoSyoRyhmia(x, y, vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari));
     }
     
@@ -343,7 +396,7 @@ public class Pelilauta {
                 int ryhmanNumero2 = lauta[naapurix][naapuriy];
                 if (ryhmanNumero2 != 0) {
                     Ryhma ryhma = ryhmat.get(ryhmanNumero2);
-                    if (ryhma.getVari() == vari) {
+                    if (vari * ryhmanNumero2 > 0) {
                         yhdistaKaksiRyhmaa(ryhmanNumero1, ryhmanNumero2);
                     }
                 }
@@ -383,8 +436,21 @@ public class Pelilauta {
             yhdistaRyhmaYmparoiviinRyhmiin(x,y,vari);
             }
             else luoUusiRyhma(x,y,vari);
+            if (koX != x || koY != y) koKaynnissa = false;
         }
-        if (koX != x || koY != y) koKaynnissa = false;
+        
+    }
+    
+    public void merkitseRyhmaKuolleeksi(int ryhmanNumero) {
+        kuolleeksiMerkitytRyhmat.add(ryhmanNumero);
+    }
+    
+    public void merkitseRyhmaElavaksi(int ryhmanNumero) {
+        kuolleeksiMerkitytRyhmat.remove(ryhmanNumero);
+    }
+    
+    public void merkitseKaikkiRyhmatElaviksi() {
+        kuolleeksiMerkitytRyhmat.clear();
     }
     
    

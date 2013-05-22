@@ -70,7 +70,7 @@ public class PelilautaTest {
     @Test
     public void kivenRyhmaanLisaamisenJalkeenRyhmassaOnOikeaMaaraKivia() {
         lauta.luoUusiRyhma(1, 1, 1);
-        lauta.luoUusiRyhma(2,2,2);
+        lauta.luoUusiRyhma(2,2,-1);
         int ryhmanNumero = lauta.getRyhmanNumero(2, 2);
         lauta.lisaaKiviRyhmaan(1,2,ryhmanNumero);
         int kivienMaara = lauta.getRyhma(ryhmanNumero).getKivienMaara();
@@ -79,7 +79,7 @@ public class PelilautaTest {
     
     @Test
     public void kivenRyhmaanLisaamisenJalkeenRyhmallaOnOikeaMaaraVapauksia() {
-        lauta.luoUusiRyhma(0,0,2);
+        lauta.luoUusiRyhma(0,0,-1);
         int ryhmanNumero = lauta.getRyhmanNumero(0, 0);
         lauta.lisaaKiviRyhmaan(0,1,ryhmanNumero);
         lauta.lisaaKiviRyhmaan(1,1,ryhmanNumero);
@@ -155,7 +155,7 @@ public class PelilautaTest {
         lauta.luoUusiRyhma(0,0,1);
         lauta.luoUusiRyhma(0,2,1);
         lauta.luoUusiRyhma(1, 0, -1);
-        lauta.lisaaKiviRyhmaan(1,1,3);
+        lauta.lisaaKiviRyhmaan(1,1,-3);
         boolean siirtoOnLaillinen = lauta.siirtoEiSyoRyhmiaMuttaOnLaillinen(0,1,1);
         assertEquals(true,siirtoOnLaillinen);
         
@@ -166,9 +166,9 @@ public class PelilautaTest {
         lauta.luoUusiRyhma(0,0,1);
         lauta.luoUusiRyhma(0,2,1);
         lauta.luoUusiRyhma(1,0,-1);
-        lauta.lisaaKiviRyhmaan(1,1,3);
-        lauta.lisaaKiviRyhmaan(1,2,3);
-        lauta.lisaaKiviRyhmaan(0,3,3);
+        lauta.lisaaKiviRyhmaan(1,1,-3);
+        lauta.lisaaKiviRyhmaan(1,2,-3);
+        lauta.lisaaKiviRyhmaan(0,3,-3);
         boolean siirtoOnLaillinen = lauta.siirtoEiSyoRyhmiaMuttaOnLaillinen(0,1,1);
         assertEquals(false,siirtoOnLaillinen);
     }
@@ -273,4 +273,113 @@ public class PelilautaTest {
         assertEquals(true,yhdisti);
     }
     
+    @Test
+    public void laitaSiirtoLaittaaSiirronLaudalleJosSiirtoOnLaillinen() {
+        lauta.luoUusiRyhma(0,0,1);
+        lauta.luoUusiRyhma(0,2,1);
+        lauta.laitaSiirto(0,1,-1);
+        boolean laittoiSiirronLaudalle = true;
+        if (lauta.getRyhmanNumero(0,1) != -3) laittoiSiirronLaudalle = false;
+        assertEquals(true,laittoiSiirronLaudalle);
+    }
+    
+    @Test
+    public void laitaSiirtoEiLaitaSiirtoaLaudalleJosSeOnLaiton() {
+        lauta.luoUusiRyhma(0,1,1);
+        lauta.luoUusiRyhma(1,0,1);
+        lauta.laitaSiirto(0,0,-1);
+        boolean eiLaittanutSiirtoaLaudalle = true;
+        if (lauta.getRyhmanNumero(0,0) != 0) eiLaittanutSiirtoaLaudalle = false;
+        assertEquals(true, eiLaittanutSiirtoaLaudalle);
+    }
+    
+    @Test
+    public void laitaSiirtoLaudallePoistaaYmparoivatVastustajanRyhmatJotkaSiirtoSyo() {
+        lauta.luoUusiRyhma(0,1,1);
+        lauta.luoUusiRyhma(1,0,1);
+        lauta.luoUusiRyhma(1,1,-1);
+        lauta.luoUusiRyhma(0,2,-1);
+        lauta.luoUusiRyhma(2,0,-1);
+        lauta.laitaSiirto(0,0,-1);
+        boolean soiRyhmat = true;
+        if (lauta.getRyhmanNumero(0,1) != 0 || lauta.getRyhmanNumero(1,0) != 0) soiRyhmat = false;
+        assertEquals(true,soiRyhmat);
+    }
+    
+    @Test
+    public void laitaSiirronSuorituksenJalkeenKoOnKaynnissaOikeassaKohdassaJosLaitettuSiirtoSoiKon() {
+        lauta.luoUusiRyhma(0,1,1);
+        lauta.luoUusiRyhma(1,0,1);
+        lauta.luoUusiRyhma(1,1,-1);
+        lauta.luoUusiRyhma(0,2,-1);
+        lauta.laitaSiirto(0,0,-1);
+        boolean koKaynnissaOikeassaKohdassa = true;
+        boolean koKaynnissa = lauta.getKoKaynnissa();
+        int koX = lauta.getKoX();
+        int koY = lauta.getKoY();
+        if (!koKaynnissa || koX != 0 || koY != 0) koKaynnissaOikeassaKohdassa = false;
+        assertEquals(true,koKaynnissaOikeassaKohdassa);
+    }
+    
+   @Test
+   public void konSyonninJalkeenEiVoiSyodaValittomastiUudestaanKota() {
+       lauta.luoUusiRyhma(0,1,1);
+       lauta.luoUusiRyhma(1,0,1);
+       lauta.luoUusiRyhma(1,1,-1);
+       lauta.luoUusiRyhma(0,2,-1);
+       lauta.laitaSiirto(0,0,-1);
+       lauta.laitaSiirto(0,1,1);
+       boolean siirtoaEiLaitettu = true;
+       if (lauta.getRyhmanNumero(0,1) == 1) siirtoaEiLaitettu = false;
+       assertEquals(true, siirtoaEiLaitettu);
+   }
+   
+   @Test
+   public void konVoiSyodaJosOnOdottanutAinakinYhdenVuoron() {
+       lauta.luoUusiRyhma(0,1,1);
+       lauta.luoUusiRyhma(1,0,1);
+       lauta.luoUusiRyhma(1,1,-1);
+       lauta.luoUusiRyhma(0,2,-1);
+       lauta.laitaSiirto(0,0,-1);
+       lauta.laitaSiirto(3,3,1);
+       lauta.laitaSiirto(3,4,-1);
+       lauta.laitaSiirto(0,1,1);
+       boolean siirtoLaitettiin = true;
+       if (lauta.getRyhmanNumero(0,1) == 0) siirtoLaitettiin = false;
+       assertEquals(true,siirtoLaitettiin);
+   }
+   
+   @Test
+   public void merkitseRyhmaKuolleeksiMerkitseeRyhmanKuolleeksi() {
+       lauta.luoUusiRyhma(0,1,1);
+       lauta.luoUusiRyhma(1,0,1);
+       lauta.merkitseRyhmaKuolleeksi(2);
+       boolean merkittyKuolleeksi = lauta.getKuolleeksiMerkitytRyhmat().contains(2);
+       assertEquals(true, merkittyKuolleeksi);
+   }
+   
+   @Test
+   public void merkitseRyhmaElavaksiMerkitseeRyhmanElavaksi() {
+       lauta.luoUusiRyhma(0,1,1);
+       lauta.luoUusiRyhma(1,0,1);
+       lauta.merkitseRyhmaKuolleeksi(2);
+       lauta.merkitseRyhmaElavaksi(2);
+       boolean merkittyElavaksi = !lauta.getKuolleeksiMerkitytRyhmat().contains(2);
+       assertEquals(true, merkittyElavaksi);
+   }
+   
+   @Test
+   public void merkitseKaikkiRyhmatElaviksiMerkitseeKaikkiRyhmatElaviksi() {
+       lauta.luoUusiRyhma(0,1,1);
+       lauta.luoUusiRyhma(1,0,1);
+       lauta.luoUusiRyhma(2,3,-1);
+       lauta.merkitseRyhmaKuolleeksi(1);
+       lauta.merkitseRyhmaKuolleeksi(2);
+       lauta.merkitseRyhmaKuolleeksi(-3);
+       lauta.merkitseKaikkiRyhmatElaviksi();
+       boolean kaikkiRyhmatMerkittyElaviksi = true;
+       if (lauta.getKuolleeksiMerkitytRyhmat().size() != 0) kaikkiRyhmatMerkittyElaviksi = false;
+       assertEquals(true, kaikkiRyhmatMerkittyElaviksi);
+   }
+   
 }
