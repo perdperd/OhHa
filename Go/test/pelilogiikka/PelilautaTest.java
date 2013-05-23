@@ -330,7 +330,7 @@ public class PelilautaTest {
        lauta.laitaSiirto(0,0,-1);
        lauta.laitaSiirto(0,1,1);
        boolean siirtoaEiLaitettu = true;
-       if (lauta.getRyhmanNumero(0,1) == 1) siirtoaEiLaitettu = false;
+       if (lauta.getRyhmanNumero(0,1) != 0) siirtoaEiLaitettu = false;
        assertEquals(true, siirtoaEiLaitettu);
    }
    
