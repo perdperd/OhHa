@@ -161,6 +161,7 @@ public class Pelikayttoliittyma {
                 System.out.println("Merkitty ryhmä " + syote + " kuolleeksi.");
             }
             else if (koitaMerkitaRyhmaElavaksi(syote)) System.out.println("Merkitty ryhmä " + syote + " eläväksi");
+            else System.out.println("Koordinaatin tulee olla muotoa kirjain-numero, esim a3 tai b5.");
         }
 }
 
@@ -170,6 +171,7 @@ public class Pelikayttoliittyma {
     public boolean koitaLaittaaSiirto(String siirto, int vari) {
         if (siirto.length() < 2 || siirto.length() > 3) return false;
         int siirronXKoordinaatti = (int) Character.toUpperCase(siirto.charAt(0)) - 65;
+        if ((int) Character.toUpperCase(siirto.charAt(0)) >=  73) siirronXKoordinaatti--;
         if (!onKokonaisluku(siirto.substring(1))) return false;
         int siirronYKoordinaatti = pituus - Integer.parseInt(siirto.substring(1));
         pelilauta.laitaSiirto(siirronYKoordinaatti,siirronXKoordinaatti,vari);
