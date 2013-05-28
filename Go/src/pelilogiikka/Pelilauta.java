@@ -17,21 +17,21 @@ public class Pelilauta {
     private int pituus;
     private int leveys;
     private int[][] lauta;
-    private int tasoituskivet;
     private int mustanVangit;
     private int valkeanVangit;
     private int uudenRyhmanNumero;
     private HashMap<Integer,Ryhma> ryhmat;
     private HashSet<Integer> kuolleeksiMerkitytRyhmat;
-    private boolean koKaynnissa;
-    private int koX;
-    private int koY;
+    private ArrayList<int[]> siirrot;
+    private boolean viimeisinSiirtoOliKonSyonti;
+    private int viimeisimmanKonSyonninXKoordinaatti;
+    private int viimeisimmanKonSyonninYKoordinaatti;
     
     // Aputaulukko kiven naapurien läpikäyntiä varten
     
     private final int[][] naapurit = {{1,0}, {0, 1}, {-1, 0}, {0,-1}};
     
-    public Pelilauta(int pituus, int leveys, int tasoituskivet) {
+    public Pelilauta(int pituus, int leveys) {
         this.pituus = pituus;
         this.leveys = leveys;
         lauta = new int[pituus][leveys];
@@ -40,13 +40,13 @@ public class Pelilauta {
                 lauta[i][j] = 0;
             }
         }
-        this.tasoituskivet = tasoituskivet;
         mustanVangit = valkeanVangit = 0;
         uudenRyhmanNumero = 1;
         ryhmat = new HashMap<Integer,Ryhma>();
         kuolleeksiMerkitytRyhmat = new HashSet<Integer>();
-        koKaynnissa = false;
-        koX = koY = -1;
+        siirrot = new ArrayList<int[]>();
+        viimeisinSiirtoOliKonSyonti = false;
+        viimeisimmanKonSyonninXKoordinaatti = viimeisimmanKonSyonninYKoordinaatti = -1;
     }
     
     public int[][] getLauta() {
@@ -81,16 +81,24 @@ public class Pelilauta {
         return valkeanVangit;
     }
     
-    public boolean getKoKaynnissa() {
-        return koKaynnissa;
+    public ArrayList<int[]> getSiirrot() {
+        return siirrot;
     }
     
-    public int getKoX() {
-        return koX;
+    public int getSiirtojenMaara() {
+        return siirrot.size();
     }
     
-    public int getKoY() {
-        return koY;
+    public boolean getViimeisinSiirtoOliKonSyonti() {
+        return viimeisinSiirtoOliKonSyonti;
+    }
+    
+    public int getViimeisimmanKonSyonninXKoordinaatti() {
+        return viimeisimmanKonSyonninXKoordinaatti;
+    }
+    
+    public int getViimeisimmanKonSyonninYKoordinaatti() {
+        return viimeisimmanKonSyonninYKoordinaatti;
     }
     
     
@@ -281,7 +289,7 @@ public class Pelilauta {
             int naapurix = x + naapurit[i][0];
             int naapuriy = y + naapurit[i][1];
             if (naapurix >= 0 && naapurix < pituus && naapuriy >= 0 && naapuriy < leveys) {
-                if (naapurix == koX && naapuriy == koY) return true;
+                if (naapurix == viimeisimmanKonSyonninXKoordinaatti && naapuriy == viimeisimmanKonSyonninYKoordinaatti) return true;
             }
          }
          return false;
@@ -296,8 +304,9 @@ public class Pelilauta {
      */
     
     public boolean siirtoOnLaillinen(int x, int y, int vari) {
+        if (x < 0 || x >= pituus || y < 0 || y >= pituus) return false;
         if (lauta[x][y] != 0) return false;
-        if (koKaynnissa && naapuriOnKoKivi(x,y)) return false;
+        if (viimeisinSiirtoOliKonSyonti && naapuriOnKoKivi(x,y)) return false;
         return (siirtoSyoRyhmia(x, y, vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari));
     }
     
@@ -426,9 +435,9 @@ public class Pelilauta {
         if (siirtoOnLaillinen(x,y,vari)) {
             if (siirtoSyoRyhmia(x,y,vari)) {
                 if (siirtoOnKo(x,y,vari)) {
-                    koKaynnissa = true;
-                    koX = x;
-                    koY = y;
+                    viimeisinSiirtoOliKonSyonti = true;
+                    viimeisimmanKonSyonninXKoordinaatti = x;
+                    viimeisimmanKonSyonninYKoordinaatti = y;
                 }
                 syoVastustajanRyhmatYmparilta(x,y,vari);
             }
@@ -436,7 +445,9 @@ public class Pelilauta {
             yhdistaRyhmaYmparoiviinRyhmiin(x,y,vari);
             }
             else luoUusiRyhma(x,y,vari);
-            if (koX != x || koY != y) koKaynnissa = false;
+            if (viimeisimmanKonSyonninXKoordinaatti != x || viimeisimmanKonSyonninYKoordinaatti != y) viimeisinSiirtoOliKonSyonti = false;
+            int[] siirto = {x,y,vari};
+            siirrot.add(siirto);
         }
         
     }
@@ -451,6 +462,16 @@ public class Pelilauta {
     
     public void merkitseKaikkiRyhmatElaviksi() {
         kuolleeksiMerkitytRyhmat.clear();
+    }
+    
+    public boolean onMerkittyKuolleeksi(int ryhmanNumero) {
+        return kuolleeksiMerkitytRyhmat.contains(ryhmanNumero);
+    }
+    
+    public void passaa() {
+        int[] siirto = {-1,-1,0};
+        siirrot.add(siirto);
+        viimeisinSiirtoOliKonSyonti = false;
     }
     
    

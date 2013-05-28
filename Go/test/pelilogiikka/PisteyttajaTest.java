@@ -29,7 +29,7 @@ public class PisteyttajaTest {
     
     @Before
     public void setUp() {
-        pelilauta = new Pelilauta(5,5,0);
+        pelilauta = new Pelilauta(5,5);
     }
     
     @After

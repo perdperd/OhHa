@@ -24,3 +24,9 @@ Lisäksi lisäsin jonkin verran kommentteja metodeihin.
 Käyttämä aika: ~5h
 
 Ajankäytön kohde: n. 4h 30 min ohjelmointia ja testien tekemistä, 30 min luokkakaavion uudistamista ja tämän kirjoittamista.
+
+28.5.2013
+
+Käyttämä aika: ~5h
+
+Ajankäytön kohde: Käyttöliittymän ohjelmointi

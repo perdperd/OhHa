@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,7 +33,7 @@ public class PelilautaTest {
     
     @Before
     public void setUp() {
-        lauta = new Pelilauta(5,5,0);
+        lauta = new Pelilauta(5,5);
     }
     
     @After
@@ -314,11 +315,35 @@ public class PelilautaTest {
         lauta.luoUusiRyhma(0,2,-1);
         lauta.laitaSiirto(0,0,-1);
         boolean koKaynnissaOikeassaKohdassa = true;
-        boolean koKaynnissa = lauta.getKoKaynnissa();
-        int koX = lauta.getKoX();
-        int koY = lauta.getKoY();
+        boolean koKaynnissa = lauta.getViimeisinSiirtoOliKonSyonti();
+        int koX = lauta.getViimeisimmanKonSyonninXKoordinaatti();
+        int koY = lauta.getViimeisimmanKonSyonninYKoordinaatti();
         if (!koKaynnissa || koX != 0 || koY != 0) koKaynnissaOikeassaKohdassa = false;
         assertEquals(true,koKaynnissaOikeassaKohdassa);
+    }
+    
+    @Test
+    public void laitaSiirtoLisaaLaitetunSiirronListaanSiirrot() {
+        lauta.laitaSiirto(0,1,1);
+        boolean lisattiinSiirto = false;
+        ArrayList<int[]> siirrot = lauta.getSiirrot();
+        for (int[] siirto : siirrot) {
+            if (siirto[0] == 0 && siirto[1] == 1 && siirto[2] == 1) lisattiinSiirto = true;
+        }
+        assertEquals(true,lisattiinSiirto);
+    }
+    
+    @Test
+    public void laitaSiirtoEiLisaaSiirtoaListaanSiirrotJosSiirtoOnLaiton() {
+        lauta.laitaSiirto(0,1,1);
+        lauta.laitaSiirto(1,0,1);
+        lauta.laitaSiirto(0,0,-1);
+        boolean eiLisattySiirtoa = true;
+        ArrayList<int[]> siirrot = lauta.getSiirrot();
+        for (int[] siirto : siirrot) {
+            if (siirto[0] == 0 && siirto[1] == 0 && siirto[2] == -1) eiLisattySiirtoa = false;
+        }
+        assertEquals(true,eiLisattySiirtoa);
     }
     
    @Test
@@ -380,6 +405,35 @@ public class PelilautaTest {
        boolean kaikkiRyhmatMerkittyElaviksi = true;
        if (lauta.getKuolleeksiMerkitytRyhmat().size() != 0) kaikkiRyhmatMerkittyElaviksi = false;
        assertEquals(true, kaikkiRyhmatMerkittyElaviksi);
+   }
+   
+   @Test
+   public void onMerkittyKuolleeksiPalauttaaTrueJosRyhmaOnMerkittyKuolleeksi() {
+       lauta.laitaSiirto(0,1,1);
+       lauta.laitaSiirto(1,0,-1);
+       lauta.merkitseRyhmaKuolleeksi(-2);
+       boolean onMerkittyKuolleeksi = lauta.onMerkittyKuolleeksi(-2);
+       assertEquals(true, onMerkittyKuolleeksi);
+   }
+   
+   @Test
+   public void onMerkittyKuolleeksiPalauttaaFalseJosRyhmaaEiOleMerkittyKuolleeksi() {
+       lauta.laitaSiirto(0,1,1);
+       lauta.laitaSiirto(1,0,-1);
+       lauta.merkitseRyhmaKuolleeksi(-2);
+       boolean onMerkittyKuolleeksi = lauta.onMerkittyKuolleeksi(1);
+       assertEquals(false, onMerkittyKuolleeksi);
+   }
+   
+   @Test
+   public void passaaminenLisaaSiirronListaanSiirrot() {
+       lauta.passaa();
+       boolean lisattiinSiirto = false;
+       ArrayList<int[]> siirrot = lauta.getSiirrot();
+       for (int[] siirto : siirrot) {
+           if (siirto[0] == -1 && siirto[1] == -1 && siirto[2] == 0) lisattiinSiirto = true;
+       }
+       assertEquals(true,lisattiinSiirto);
    }
    
 }
