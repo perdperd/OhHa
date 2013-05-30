@@ -5,7 +5,11 @@
 package pelilogiikka;
 
 /**
- *
+ * Luokka hoitaa itse pelaamisen liittyvän logiikan, johon kuuluvat ryhmien
+ * luonti ja lisääminen laudalle, niiden yhdistely, kivien syöminen ja siirtojen 
+ * laillisuuden tarkistus.
+ * 
+ * 
  * @author Prod
  */
 
@@ -65,6 +69,13 @@ public class Pelilauta {
         return lauta[x][y];
     }
     
+    /**
+     * Metodi hakee ryhmat-hashMapista sen ryhmän, jonka avain on syöteluku
+     * 
+     * @param ryhmanNumero Haettavan ryhmän avain hashMapissa ryhmat
+     * @return ryhmanNumeroa vastaava ryhma
+     */
+    
     public Ryhma getRyhma(int ryhmanNumero) {
         return ryhmat.get(ryhmanNumero);
     }
@@ -102,9 +113,13 @@ public class Pelilauta {
     }
     
     
-    /*
-     * metodi lisää laudan kohdassa [x][y] olevan kiven vapaudet ryhmanNumeroa
+    /**
+     * Metodi lisää syötekoordinaatteja vastaavan kiven vapaudet syötelukua
      * vastaavaan ryhmään
+     * 
+     * @param x Kiven rivi laudalla
+     * @param y Kiven sarake laudalla
+     * @param ryhmanNumero Sen ryhmän avain hashMapissa ryhmat, johon vapauksia ollaan lisäämässä.
      */
     
     public void lisaaKivenVapaudetRyhmaan(int x, int y, int ryhmanNumero) {
@@ -120,9 +135,12 @@ public class Pelilauta {
          }
     }
     
-    /*
-     * metodi poistaa laudan kohtaa [x][y] ympäröiviltä ryhmiltä kohtaa [x][y]
-     * vastaavan vapauden
+    /**
+     * Metodi poistaa syötekoordinaatteja ympäröiviltä ryhmiltä syötekoordinaatteja
+     * vastaavan kohdan vapauksista
+     * 
+     * @param x Kiven rivi laudalla
+     * @param y Kiven sarake laudalla
      */
     
     public void poistaKiviYmparoivienRyhmienVapauksista(int x, int y) {
@@ -139,11 +157,13 @@ public class Pelilauta {
         }
     }
     
-    /*
-     * metodi luo uuden ryhmän, lisää sen ryhmat-listaan ja laittaa laudan
-     * kohtaan [x][y] ryhmän indeksin listassa ryhmat. tämän jälkeen poistetaan
-     * ympäröiviltä ryhmiltä kohta [x][y] vapauksista, lisätään kohdan [x][y]
-     * vapaudet luotuun ryhmään ja lisätään kohtaa [x][y] vastaava kivi ryhmään.
+    /**
+     * Metodi luo uuden ryhmän, jonka väri on syötteenä annnettu väri, syötekoordinaatteja
+     * vastaavaan laudan kohtaan ja päivittää ympäröivien ryhmien vapaudet.
+     * 
+     * @param x Sen laudan kohdan rivi, johon ryhmää ollaan luomassa
+     * @param y Sen laudan kohdan sarake, johon ryhmää ollaan luomassa
+     * @param vari Luotavan ryhmän väri
      */
     
     public void luoUusiRyhma(int x, int y, int vari) {
@@ -158,11 +178,13 @@ public class Pelilauta {
         
     }
     
-    /*
-     * metodi korvaa kohdan [x][y] ryhmanNumerolla, poistaa kohtaa [x][y] vastaavan
-     * vapauden ympäröiviltä ryhmiltä ja lisää sen vapaudet ryhmanNumeroa vastaavaan
-     * ryhmään. tämän jälkeen vielä lisätään kohtaa [x][y] vastaava kivi
-     * ryhmän kivien joukkoon.
+    /**
+     * Metodi lisää syötekoordinaatteja vastaavan laudan kiven syöteavainta
+     * vastaavaan ryhmään
+     * 
+     * @param x Lisättävän kiven rivi laudalla
+     * @param y Lisättävän kiven sarake laudalla
+     * @param ryhmanNumero Sen ryhmän avain hashMapissa ryhmat, johon ollaan lisäämässä kiveä
      */
     
     public void lisaaKiviRyhmaan(int x, int y, int ryhmanNumero) {
@@ -173,10 +195,12 @@ public class Pelilauta {
         ryhma.lisaaKivi(x,y);
     }
     
-    /*
-     * metodi yhdistää ryhmanNumero1:ä ja ryhmanNumero2:a vastaavat ryhmät toisiinsa.
-     * tämän jälkeen kaikki laudan kohdat, joissa on luku ryhmanNumero2 korvataan
-     * luvulla ryhmanNumero1
+    /**
+     * Metodi yhdistää syötteenä annettuja ryhmien numeroita vastaavat ryhmät toisiinsa
+     * siten, että yhdistämisen jälkeen laudalla on enää vain ensimmäiseksi annettu ryhmä
+     * 
+     * @param ryhmanNumero1 Ensimmäistä yhdistettävää ryhmää vastaava avain hashMapissa ryhmat
+     * @param ryhmanNumero2 Toista yhdistettävää ryhmää vastaava avain hashMapissa ryhmat
      */
     
     public void yhdistaKaksiRyhmaa(int ryhmanNumero1, int ryhmanNumero2) {
@@ -192,11 +216,12 @@ public class Pelilauta {
         }
     }
     
-    /*
-     * haetaan ryhmanNumeroa vastaava ryhmä ja lisätään sen kivien määrä valkoisen
-     * vankeihin, jos ryhmä on musta. muuten lisätään ne mustan vankeihin.
-     * tämän jälkeen korvataan jokainen laudan kohta [x][y], jossa on luku ryhmanNumero,
-     * nollalla ja lisataan kohdan [x][y] vihollisnaapureille vapaudeksi [x][y].
+    /**
+     * Metodi hakee syötteenä annettua ryhmän numeroa vastaavan ryhmän ryhmat-
+     * hashMapista ja poistaa sen laudalta, kasvattaen samalla vankilaskuria ryhmän
+     * koolla ja päivittäen ympäröivien kivien vapaudet
+     * 
+     * @param ryhmanNumero Sen ryhmän avain hashMapissa ryhmat, jota ollaan poistamassa.
      */
     
     
@@ -217,9 +242,14 @@ public class Pelilauta {
         }
     }
     
-    /*
-     * metodi käy kohdan [x][y] naapurit läpi ja lisää niille vapauden, jos ne
-     * eivät ole samaa ryhmää kuin ryhmanNumero
+    /**
+     * Metodi käy syötekoordinaatteja vastaavan laudan kohdan naapurit läpi ja lisää naapuria
+     * vastaavalle ryhmälle kohdan vapaudeksi, jos naapuri ei ole 0 tai syötteenä annettu ryhmän
+     * numero
+     * 
+     * @param x Lisättävän vapauden rivi laudalla
+     * @param y Lisättävän vapauden sarake laudalla
+     * @param ryhmanNumero Sitä ryhmää vastaava avain hashMapissa ryhmat, jolle ei sallita vapauden lisäämistä
      */
     
     public void lisaaPoistettavanKivenVihollisnaapureilleVapaudeksiPoistettavaKivi(int x, int y, int ryhmanNumero) {
@@ -235,11 +265,14 @@ public class Pelilauta {
          }
     }
     
-    /*
-     * metodi tutkii söisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
-     * kiviä. tämän metodi tekee tutkimalla onko kohdalla [x][y] naapureina
-     * ryhmiä, joiden väri ei ole sama kuin vari ja joiden vapauksien määrä on 
-     * 1. tällöin metodi palauttaa true. muuten metodi palauttaa false.
+    /**
+     * Metodi tutkii, söisiko syötekoordinaatteja vastaavaan laudan kohtaan laitettu
+     * kivi, jonka väri on syötteenä annettu väri, kiviä
+     * 
+     * @param x Tutkittavan kohdan rivi laudalla
+     * @param y Tutkittavan kohdan sarake laudalla
+     * @param vari Kiven väri
+     * @return Boolean, joka kertoo syökö kivi ryhmiä
      */
     
     public boolean siirtoSyoRyhmia(int x, int y, int vari) {
@@ -257,12 +290,14 @@ public class Pelilauta {
         return false;
     }
     
-    /*
-     * metodi tutkii olisiko kohtaan [x][y] laitettu kivi, jonka vari on vari,
-     * laillinen sillä oletuksella, että siirto ei syö kiviä. metodi tekee tämän
-     * tutkimalla onko kohdalla [x][y] naapureina kohtia, joissa on luku 0 (eli
-     * vapauksia), tai kohtia, joissa on samanvärinen ryhmä, jolla on yli yksi vapaus.
-     * tässä tapauksessa palautetaan true. muuten palautetaan false.
+    /**
+     * Metodi tutkii olisiko syötekoordinaatteja vastaavaan kohtaan laitettu kivi,
+     * jonka väri on syötteenä annettu väri, laillinen sillä oletuksella, että se ei syö kiviä.
+     * 
+     * @param x Tutkittavan kohdan rivi laudalla
+     * @param y Tutkittavan kohdan sarake laudalla
+     * @param vari Kiven väri
+     * @return Boolean, joka kertoo onko siirto laillinen
      */
     
     public boolean siirtoEiSyoRyhmiaMuttaOnLaillinen(int x, int y, int vari) {
@@ -279,9 +314,13 @@ public class Pelilauta {
         return false;
     }
     
-    /*
-     * metodi tarkistaa onko kohdan [x][y] naapurina juuri syöty ko. tällöin
-     * kohtaan [x][y] siirron laittaminen on laitonta.
+    /**
+     * Metodi tutkii onko syötekoordinaatteja vastaavan laudan naapurina kivi, joka
+     * söi viimeksi kon.
+     * 
+     * @param x Tutkittavan kohdan rivi laudalla
+     * @param y Tutkittavan kohdan sarake laudalla
+     * @return Boolean, joka kertoo onko kohdan naapurina viimeksi kon syönyt kivi
      */
     
     public boolean naapuriOnKoKivi(int x, int y) {
@@ -295,12 +334,14 @@ public class Pelilauta {
          return false;
    }
     
-    /*
-     * metodi tutkii olisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
-     * laillinen siirto. ensiksi katsotaan, onko kohta [x][y] vapaa. jos ei ole,
-     * palautetaan false. Tämän jälkeen katsotaan, onko käynnissä kota ja onko kohdan
-     * [x][y] jokin naapuri kohta, josta ko viimeksi syötiin. tässä tapauksessa palautetaan false.
-     * muuten palautetaan siirtoSyoRyhmia(x,y,vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari)
+    /**
+     * Metodi tutkii olisiko syötekoordinaatteina annettuun kohtaan laitettu kivi,
+     * jonka väri on syötteenä annettu väri, laillinen siirto
+     * 
+     * @param x Tutkittavan kohdan rivi laudalla
+     * @param y Tutkittavan kohdan sarake laudalla
+     * @param vari Kiven väri
+     * @return Boolean, joka kertoo onko siirto laillinen
      */
     
     public boolean siirtoOnLaillinen(int x, int y, int vari) {
@@ -310,18 +351,17 @@ public class Pelilauta {
         return (siirtoSyoRyhmia(x, y, vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari));
     }
     
-    /*
-     * metodi tutkii, aloittaisiko kohtaan [x][y] laitettu kivi, jonka väri on vari,
-     * kon. tämä tehdään käymällä kohdan [x][y] naapurit läpi. jos kohdalla on naapurina
-     * vapaus tai samanvärinen ryhmä kuin vari, palautetaan false. jos kohdalla
-     * on naapurina erivärinen ryhmä, tutkitaan ovatko sen vapaudet 1. jos näin
-     * on ja ryhmä sisältää yli yhden kiven, kyseessä ei ole ko ja palautetaan false.
-     * jos taas ryhmä sisältää vain yhden kiven, kasvatetaan laskuria
-     * syotavienYhdenKivenRyhmienMaara. lopuksi palautetaan true jos
-     * tämä laskuri on 1, muuten palautetaan false.
+    /**
+     * Metodi tutkii aloittaisiko syötekoordinaatteja vastaavaan laudan kohtaan
+     * laitettu kivi, jonka väri on syötteenä annettu väri, kon.
+     * 
+     * @param x Tutkittavan kohdan rivi laudalla
+     * @param y Tutkittavan kohdan sarake laudalla
+     * @param vari Kiven väri
+     * @return Boolean, joka kertoo aloittaako siirto kon.
      */
     
-    public boolean siirtoOnKo(int x, int y, int vari) {
+    public boolean siirtoAloittaaKon(int x, int y, int vari) {
         int syotavienYhdenKivenRyhmienMaara = 0;
         for (int i = 0; i<naapurit.length; i++) {
            int naapurix = x + naapurit[i][0];
@@ -345,10 +385,13 @@ public class Pelilauta {
         return syotavienYhdenKivenRyhmienMaara == 1;
     }
     
-    /*
-     * metodi syö kohdan [x][y] ympäriltä kaikki ryhmät, joiden väri ei ole vari
-     * ja joiden vapauksien määrä on 1. tämä tehdään kutsumalla metodia poistaRyhmaLaudalta
-     * parametrina ymparoivan ryhman numero.
+    /**
+     * Metodi syö syötekoordinaatteja vastaavan laudan kohdan ympäriltä kaikki ryhmät,
+     * joiden väri ei ole sama kuin syötteenä annettu väri.
+     * 
+     * @param x Kohdan rivi laudalla
+     * @param y Kohdan sarake laudalla
+     * @param vari Väri, jota poistettavat ryhmät eivät ole
      */
     
     public void syoVastustajanRyhmatYmparilta(int x, int y, int vari) {
@@ -365,11 +408,15 @@ public class Pelilauta {
         }
     }
     
-    /*
-     * metodi koittaa etsiä kohdan [x][y] naapureista ryhmän, jonka väri on sama
-     * kuin vari. jos tällainen löytyy, kutsutaan metodia lisaaKiviRyhmaan
-     * parametreina x,y ja ryhmanNumero ja palautetaan true. muussa tapauksessa
-     * palautetaan false.
+    /**
+     * Metodi koittaa etsiä syötekoordinaatteja vastaavan laudan kohdan naapureista
+     * jonkun ryhmän, jonka väri on syötteenä annettu väri, ja sitten yhdistää kohtaa
+     * vastaavan kiven tähän ryhmään.
+     * 
+     * @param x Yhdistettävän kiven rivi laudalla
+     * @param y Yhdistettävän kiven sarake laudalla
+     * @param vari Niiden ryhmien väri, joihin ollaan yhdistämässä
+     * @return Boolean, joka kertoo löytyikö naapurista jokin syötteenä annetun värin värinen ryhmä
      */
     
     public boolean yhdistaKiviJohonkinYmparoivaanRyhmaan(int x, int y, int vari) {
@@ -390,13 +437,15 @@ public class Pelilauta {
         return false;
     }
     
-    /*
-     * metodi etsii kohdan [x][y] naapureista ryhmiä, joiden väri on sama kuin
-     * kohdan [x][y] ryhmän. jos tällainen löytyy, kutsutaan metodia yhdistaKaksiRyhmaa
-     * parametreina kohdan [x][y] luku ja ympäröivän ryhmän numero
+    /**
+     * Metodi yhdistää syötekoordinaatteja vastaavan laudan kohdan avainta vastaavan ryhmän
+     * ympäröiviin samanvärisiin ryhmiin
+     * 
+     * @param x Laudan kohdan rivi, jota vastaavaa ryhmää ollaan yhdistämässä
+     * @param y Laudan kohdan sarake, jota vastaavaa ryhmää ollaan yhdistämässä
      */
     
-    public void yhdistaRyhmaYmparoiviinRyhmiin(int x, int y, int vari) {
+    public void yhdistaRyhmaYmparoiviinRyhmiin(int x, int y) {
         int ryhmanNumero1 = lauta[x][y];
         for (int i = 0; i<naapurit.length; i++) {
             int naapurix = x + naapurit[i][0];
@@ -405,7 +454,7 @@ public class Pelilauta {
                 int ryhmanNumero2 = lauta[naapurix][naapuriy];
                 if (ryhmanNumero2 != 0) {
                     Ryhma ryhma = ryhmat.get(ryhmanNumero2);
-                    if (vari * ryhmanNumero2 > 0) {
+                    if (ryhmanNumero1 * ryhmanNumero2 > 0) {
                         yhdistaKaksiRyhmaa(ryhmanNumero1, ryhmanNumero2);
                     }
                 }
@@ -413,28 +462,19 @@ public class Pelilauta {
         }
     }
     
-    /*
-     * metodi tutkii aluksi, onko siirto, joka laitetaan kohtaan [x][y] ja
-     * jonka väri on vari, laillinen. jos näin on, tutkitaan syökö siirto kiviä.
-     * jos siirto syö kiviä, tarkistetaan vielä aloittaako siirto kon. jos näin
-     * on, merkitään että ko on käynnissä ja laitetaan kon x-koordinaatiksi x
-     * ja y-koordinaatiksi y. tämän jälkeen syödään vastustajan ryhmät kohdan [x][y]
-     * ympäriltä.
+    /**
+     * Metodi laittaa syötekoordinaatteina annettuun laudan kohtaan syötteenä annetun
+     * värin värisen kiven, jos se on laillista
      * 
-     * tämän jälkeen koitetaan yhdistää kohdan [x][y] kivi, jonka vari on vari,
-     * johonkin ympäröivään ryhmään. jos tämä onnistui, eli yhdistaKiviJohonkinYmparoivaanRyhmaan
-     * palautti true, yhdistetään vielä kohdan [x][y] ryhmä kaikkiin ympäröiviin ryhmiin.
-     * jos tämä ei onnistunut, luodaan uusi ryhmä, jonka väri on vari, kohtaan [x][y].
-     * 
-     * lopuksi tarkistetaan vielä oliko tämä siirto ollut kon syönti vertaamalla
-     * x:ää koX:ään ja y:tä koY:n. jos jompikumpi näistä eroaa toisesta, merkataan
-     * että ko ei ole enää käynnissä.
+     * @param x Laudan kohdan rivi, johon kiveä ollaan laittamassa
+     * @param y Laudan kohdan sarake, johon kiveä ollaan laittamassa
+     * @param vari Laitettavan kiven väri
      */
     
     public void laitaSiirto(int x, int y, int vari) {
         if (siirtoOnLaillinen(x,y,vari)) {
             if (siirtoSyoRyhmia(x,y,vari)) {
-                if (siirtoOnKo(x,y,vari)) {
+                if (siirtoAloittaaKon(x,y,vari)) {
                     viimeisinSiirtoOliKonSyonti = true;
                     viimeisimmanKonSyonninXKoordinaatti = x;
                     viimeisimmanKonSyonninYKoordinaatti = y;
@@ -442,7 +482,7 @@ public class Pelilauta {
                 syoVastustajanRyhmatYmparilta(x,y,vari);
             }
             if  (yhdistaKiviJohonkinYmparoivaanRyhmaan(x,y,vari)) {
-            yhdistaRyhmaYmparoiviinRyhmiin(x,y,vari);
+            yhdistaRyhmaYmparoiviinRyhmiin(x,y);
             }
             else luoUusiRyhma(x,y,vari);
             if (viimeisimmanKonSyonninXKoordinaatti != x || viimeisimmanKonSyonninYKoordinaatti != y) viimeisinSiirtoOliKonSyonti = false;
@@ -452,21 +492,48 @@ public class Pelilauta {
         
     }
     
+    /**
+     * Metodi merkitsee sen ryhmän, jonka avain hashMapissa ryhmat on syötteena annettu luku,
+     * kuolleeksi
+     * 
+     * @param ryhmanNumero Sen ryhmän avain hashMapissa ryhmat, jota ollaan merkkaamassa kuolleeksi
+     */
+    
     public void merkitseRyhmaKuolleeksi(int ryhmanNumero) {
         kuolleeksiMerkitytRyhmat.add(ryhmanNumero);
     }
+    
+    /**
+     * Metodi merkitsee sen ryhmän, jonka avain hashMapissa ryhmat on syötteena annettu luku,
+     * eläväksi poistamalla sen kuolleeksi merkityistä ryhmistä
+     * 
+     * @param ryhmanNumero Sen ryhmän avain hashMapissa ryhmat, jota ollaan merkkaamassa eläväksi
+     */
     
     public void merkitseRyhmaElavaksi(int ryhmanNumero) {
         kuolleeksiMerkitytRyhmat.remove(ryhmanNumero);
     }
     
+    /**
+     * Metodi merkitsee kaikki ryhmät eläviksi
+     */
+    
     public void merkitseKaikkiRyhmatElaviksi() {
         kuolleeksiMerkitytRyhmat.clear();
     }
     
+    /**
+     * Metodi tarkistaa onko se ryhmä, jonka avain hashMapissa ryhmat on syötteenä annettu luku,
+     * merkitty kuolleeksi
+     * 
+     * @param ryhmanNumero Sen ryhmän avain hashMapissa ryhmat, jota ollaan tutkimassa
+     * @return Boolean, joka kertoo onko ryhmä merkitty kuolleeksi
+     */
+    
     public boolean onMerkittyKuolleeksi(int ryhmanNumero) {
         return kuolleeksiMerkitytRyhmat.contains(ryhmanNumero);
     }
+    
     
     public void passaa() {
         int[] siirto = {-1,-1,0};

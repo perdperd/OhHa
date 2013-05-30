@@ -7,8 +7,7 @@ package go;
 import kayttoliittyma.*;
 
 /**
- *
- * @author Prod
+ * Luokka, joka käynnistää ohjelman
  */
 public class Go {
 

@@ -5,7 +5,10 @@
 package pelilogiikka;
 
 /**
- *
+ * Luokka esittää laudalla sijaitsevista kivistä muodostuvaa ryhmää ja mahdollistaa
+ * kivien ja vapauksien lisäämisen ryhmiin sekä ryhmien yhdistämisen.
+ * 
+ * 
  * @author Prod
  */
 
@@ -34,8 +37,11 @@ public class Ryhma {
         return kivet.size();
     }
     
-    /* 
-     * metodi lisää laudan kohtaa [x][y] vastaavan kiven ryhmaan
+    /** 
+     * Metodi lisää syötelukuja vastaavan kiven ryhmään.
+     * 
+     * @param x  Lisättävän kiven rivi laudalla
+     * @param y Lisättävän kiven sarake laudalla
      */
     
     public void lisaaKivi(int x, int y) {
@@ -52,8 +58,11 @@ public class Ryhma {
         return vapaudet.size();
     }
     
-    /*
-     * metodi lisää laudan kohtaa [x][y] vastaavan vapauden ryhmään
+    /**
+     * Metodi lisää syötelukuja vastaavan vapauden ryhmään.
+     * 
+     * @param x Lisättävän vapauden rivi laudalla
+     * @param y Lisättävän vapauden sarake laudalla
      */
     
     public void lisaaVapaus(int x, int y) {
@@ -65,10 +74,11 @@ public class Ryhma {
         vapaudet.remove(x+"."+y);
     }
     
-    /*
-     * metodi yhdistää ryhmän toiseen ryhmään lisäämällä toisen ryhmän kivet ja
-     * vapaudet siihen ja sitten poistamalla vapauksista mahdolliset toisen
-     * ryhmän kivet
+    /**
+     * Metodi yhdistää ryhmän toiseen ryhmään lisäämällä siihen toisen ryhmän
+     * kivet ja vapaudet ja sen jälkeen poistamalla toisen ryhmän kivet vapauksista.
+     * 
+     * @param ryhma Ryhma, johon ollaan yhdistämässä.
      */
     
     public void yhdistaToiseenRyhmaan(Ryhma ryhma) {

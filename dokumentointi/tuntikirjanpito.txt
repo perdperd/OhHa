@@ -30,3 +30,9 @@ Ajankäytön kohde: n. 4h 30 min ohjelmointia ja testien tekemistä, 30 min luokkak
 Käyttämä aika: ~5h
 
 Ajankäytön kohde: Käyttöliittymän ohjelmointi
+
+30.5.2013
+
+Käyttämä aika: ~2h
+
+Ajankäytön kohde: JavaDocien kirjoittaminen, sekvenssikaavioiden teko

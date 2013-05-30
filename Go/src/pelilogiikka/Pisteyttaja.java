@@ -5,6 +5,7 @@
 package pelilogiikka;
 
 /**
+ * Luokka hoitaa pelin pisteyttämisen sen loputtua.
  *
  * @author Prod
  */

@@ -180,7 +180,7 @@ public class PelilautaTest {
         lauta.luoUusiRyhma(1,0,1);
         lauta.luoUusiRyhma(1,1,-1);
         lauta.luoUusiRyhma(0,2,-1);
-        boolean siirtoOnKo = lauta.siirtoOnKo(0,0,-1);
+        boolean siirtoOnKo = lauta.siirtoAloittaaKon(0,0,-1);
         assertEquals(true, siirtoOnKo);
     }
     
@@ -191,7 +191,7 @@ public class PelilautaTest {
         lauta.luoUusiRyhma(1,1,-1);
         lauta.luoUusiRyhma(0,2,-1);
         lauta.luoUusiRyhma(2,0,-1);
-        boolean siirtoOnKo = lauta.siirtoOnKo(0,0,-1);
+        boolean siirtoOnKo = lauta.siirtoAloittaaKon(0,0,-1);
         assertEquals(false,siirtoOnKo);
     }
     
@@ -267,7 +267,7 @@ public class PelilautaTest {
         lauta.luoUusiRyhma(0,2,1);
         lauta.luoUusiRyhma(1,1,1);
         lauta.luoUusiRyhma(0,1,1);
-        lauta.yhdistaRyhmaYmparoiviinRyhmiin(0,1,1);
+        lauta.yhdistaRyhmaYmparoiviinRyhmiin(0,1);
         boolean yhdisti = false;
         if (lauta.getRyhmanNumero(0,0) == 4 && lauta.getRyhmanNumero(0,2) == 4 && lauta.getRyhmanNumero(1,1) == 4 && lauta.getRyhmanNumero(0,1) == 4)
             yhdisti = true;

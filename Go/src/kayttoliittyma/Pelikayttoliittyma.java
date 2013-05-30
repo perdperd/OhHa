@@ -8,6 +8,8 @@ import pelilogiikka.*;
 import java.util.Scanner;
 
 /**
+ * Luokka on tekstipohjainen käyttöliittymä gon pelaamiseen kahden ihmispelaajan
+ * välillä.
  *
  * @author Prod
  */
