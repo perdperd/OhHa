@@ -150,8 +150,8 @@ public class Pelikayttoliittyma {
                 int mustanPisteet = pisteyttaja.getMustanPisteet();
                 int valkeanPisteet = pisteyttaja.getValkeanPisteet();
                 System.out.println("Mustan pisteet: " + mustanPisteet + " Valkean pisteet: " + valkeanPisteet);
-                if (mustanPisteet > valkeanPisteet) System.out.println("Musta voitti " + (mustanPisteet-valkeanPisteet) + " pistettä.");
-                else if (mustanPisteet < valkeanPisteet) System.out.println("Valkea voitti " + (valkeanPisteet-mustanPisteet) + "pistettä.");
+                if (mustanPisteet > valkeanPisteet) System.out.println("Musta voitti " + (mustanPisteet-valkeanPisteet) + " pisteellä.");
+                else if (mustanPisteet < valkeanPisteet) System.out.println("Valkea voitti " + (valkeanPisteet-mustanPisteet) + " pisteellä.");
                 else System.out.println("Tasapeli!");
                 break;
             }
