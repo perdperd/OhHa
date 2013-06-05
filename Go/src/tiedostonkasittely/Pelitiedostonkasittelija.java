@@ -58,7 +58,7 @@ public class Pelitiedostonkasittelija {
      * Metodi yrittää ladata syötteenä annettua tiedoston nimeä vastaavan tiedoston
      * sisältämät siirrot
      * 
-     * @param ladattavanPelinTiedostonimi
+     * @param ladattavanPelinTiedostonimi Sen tiedoston nimi, josta ollaan lataamassa siirtoja
      * @return true, jos siirtojen lataaminen onnistui, ja muuten false
      */
     
