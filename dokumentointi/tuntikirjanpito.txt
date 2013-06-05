@@ -36,3 +36,9 @@ Ajankäytön kohde: Käyttöliittymän ohjelmointi
 Käyttämä aika: ~2h
 
 Ajankäytön kohde: JavaDocien kirjoittaminen, sekvenssikaavioiden teko
+
+4.6.2013-5.6-2013 (hieman kummallakin puolella)
+
+Käyttämä aika: ~4h
+
+Ajankäytön kohde: n. 3h koodausta ja 1h JavaDocien kirjoittamista

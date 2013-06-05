@@ -7,22 +7,70 @@ package pelilogiikka;
 /**
  * Luokka hoitaa pelin pisteyttämisen sen loputtua.
  *
- * @author Prod
+ * @author Juuso Nyyssönen
  */
 
 import java.util.HashSet;
 import java.util.ArrayDeque;
 
 public class Pisteyttaja {
+    
+    /**
+     * Laudan kuolleeksi merkityt ryhmät sisältävä HashSet
+     */
+    
     private HashSet<Integer> kuolleetRyhmat;
+    
+    /**
+     * Laudan leveys
+     */
+    
     private int leveys;
+    
+    /**
+     * Laudan pituus
+     */
+    
     private int pituus;
+    
+    /**
+     * Pisteet, jotka pisteyttäjä on laskenut mustalle
+     */
+    
     private int mustanPisteet;
+    
+    /**
+     * Pisteet, jotka pisteyttäjä on laskenut valkealle
+     */
+    
     private int valkeanPisteet;
+    
+    /**
+     * Taulukko, joka esittää laudan tilannetta pelin lopussa
+     * 
+     * Sisältää laudan ryhmien numeroita
+     */
+    
     private int[][] lauta;
+    
+    /**
+     * Taulukko, jossa pidetään kirjaa niistä kohdista, jotka pisteyttäjä on jo
+     * laskenut
+     */
+    
     private boolean[][] lasketutKohdat;
     
+    /**
+     * Aputaulukko kiven naapurien läpikäyntiä varten
+     */
+    
     private final int[][] naapurit = {{1,0}, {0, 1}, {-1, 0}, {0,-1}};
+    
+    /**
+     * Luo annettua pelilaudan tilannetta vastaavan pisteyttäjän
+     * 
+     * @param pelilauta Pelilauta, jota ollaan pisteyttämässä
+     */
     
     public Pisteyttaja(Pelilauta pelilauta) {
         leveys = pelilauta.getLeveys();
@@ -58,6 +106,12 @@ public class Pisteyttaja {
         return lasketutKohdat;
     }
     
+    /**
+     * Kopioi syötteenä annetun pelilaudan laudan tilanteen pisteyttäjään
+     * 
+     * @param pelilauta Pelilauta, jonka tilannetta ollaan kopioimassa
+     */
+    
     public void kopioiLaudanTilanne(Pelilauta pelilauta) {
         for (int i = 0; i<pituus; i++) {
             for (int j = 0; j<leveys; j++) {
@@ -66,6 +120,10 @@ public class Pisteyttaja {
         }
     }
     
+    /**
+     * Poistaa laudalta kuolleeksi merkityt ryhmät ja lisää ryhmien kiviä vastaavat
+     * pisteet mustan tai valkean pisteisiin
+     */
     
     public void poistaKuolleetRyhmat() {
         for (int i = 0; i<pituus; i++) {
@@ -79,6 +137,11 @@ public class Pisteyttaja {
         }
     }
     
+    /**
+     * Alustaa taulukon lasketutKohdat niin, että laudan tyhjiä kohtia taulukossa vastaa false
+     * ja muita true
+     */
+    
     public void alustaLasketutKohdat() {
         for (int i = 0; i<pituus; i++) {
             for (int j = 0; j<leveys; j++) {
@@ -87,6 +150,15 @@ public class Pisteyttaja {
             }
         }
     }
+    
+    /**
+     * Laskee syötteenä annettua kohtaa vastaavan alueen pisteet
+     * 
+     * @param i Laskemisen aloituskohdan rivi laudalla
+     * @param j Laskemisen aloituskohdan sarake laudalla
+     * @return Luku, joka on joko alueen pisteet, jos alue kuuluu mustalle, tai alueen pisteet negatiivisena,
+     * jos alue kuuluu valkealle, ja muuten 0
+     */
     
     public int pisteytaAlue(int i, int j) {
         ArrayDeque<int[]> apujono = new ArrayDeque<int[]>();
@@ -122,6 +194,11 @@ public class Pisteyttaja {
         if (alueEiKuuluKenellekaan) return 0;
         else return alueenVari*alueenKoko;
     }
+    
+    /**
+     * Laskee laudan kaikkien alueiden pisteet ja lisää jokaisen alueen pisteet sen
+     * omistavan pelaajan pisteisiin
+     */
     
     public void pisteyta() {
         for (int i = 0; i<pituus; i++) {

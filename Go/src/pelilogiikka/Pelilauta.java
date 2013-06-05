@@ -10,7 +10,7 @@ package pelilogiikka;
  * laillisuuden tarkistus.
  * 
  * 
- * @author Prod
+ * @author Juuso Nyyssönen
  */
 
 import java.util.HashMap;
@@ -18,22 +18,92 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Pelilauta {
+    /**
+     * Laudan pituus
+     */
+    
     private int pituus;
+    
+    /**
+     * Laudan leveys
+     */
+    
     private int leveys;
+    
+    /**
+     * Taulukko joka esittää lautaa, jolla pelataan
+     * 
+     * Sisältää laudan ryhmien numeroita
+     */
+    
     private int[][] lauta;
+    
+    /**
+     * Mustan vankien määrä
+     */
+    
     private int mustanVangit;
+    
+    /**
+     * Valkean vankien määrä 
+     */
+    
     private int valkeanVangit;
+    
+    /**
+     * Seuraavaksi luotavalle uudelle ryhmälle annettava numero
+     */
+    
     private int uudenRyhmanNumero;
+    
+    /**
+     * Laudan sisältämät ryhmät sisältävä HashMap, jonka avaimet vastaavat
+     * ryhmien numeroita
+     */
+    
     private HashMap<Integer,Ryhma> ryhmat;
+    
+    /**
+     * Kuolleeksi merkittyen ryhmien numerot sisältävä HashSet
+     */
+    
     private HashSet<Integer> kuolleeksiMerkitytRyhmat;
+    /**
+     * Pelilaudalle pelatut siirrot taulukkomuodossa sisältävä ArrayList
+     */
+    
     private ArrayList<int[]> siirrot;
+    
+    /**
+     * Boolean, joka kertoo söikö viimeisin siirto kon
+     */
+    
     private boolean viimeisinSiirtoOliKonSyonti;
+    
+    /**
+     * Viimeisimmän siirron, joka söi kon, sarake laudalla
+     */
+    
     private int viimeisimmanKonSyonninXKoordinaatti;
+    
+    /**
+     * Viimeisimmän siirron, joka söi kon, rivi laudalla
+     */
+    
     private int viimeisimmanKonSyonninYKoordinaatti;
     
-    // Aputaulukko kiven naapurien läpikäyntiä varten
+    /** 
+    * Aputaulukko kiven naapurien läpikäyntiä varten
+    */
     
     private final int[][] naapurit = {{1,0}, {0, 1}, {-1, 0}, {0,-1}};
+    
+    /**
+     * Luo uuden pelilaudan, jonka pituus ja leveys ovat annetut
+     * 
+     * @param pituus Luotavan pelilaudan pituus
+     * @param leveys Luotavan pelilaudan leveys
+     */
     
     public Pelilauta(int pituus, int leveys) {
         this.pituus = pituus;
@@ -272,7 +342,7 @@ public class Pelilauta {
      * @param x Tutkittavan kohdan rivi laudalla
      * @param y Tutkittavan kohdan sarake laudalla
      * @param vari Kiven väri
-     * @return Boolean, joka kertoo syökö kivi ryhmiä
+     * @return true, jos siirto syö ryhmiä, ja muuten false
      */
     
     public boolean siirtoSyoRyhmia(int x, int y, int vari) {
@@ -297,7 +367,7 @@ public class Pelilauta {
      * @param x Tutkittavan kohdan rivi laudalla
      * @param y Tutkittavan kohdan sarake laudalla
      * @param vari Kiven väri
-     * @return Boolean, joka kertoo onko siirto laillinen
+     * @return true, jos siirto ei syö ryhmiä, mutta on laillinen, ja muuten false
      */
     
     public boolean siirtoEiSyoRyhmiaMuttaOnLaillinen(int x, int y, int vari) {
@@ -320,7 +390,7 @@ public class Pelilauta {
      * 
      * @param x Tutkittavan kohdan rivi laudalla
      * @param y Tutkittavan kohdan sarake laudalla
-     * @return Boolean, joka kertoo onko kohdan naapurina viimeksi kon syönyt kivi
+     * @return true, jos laudan naapurina on viimeksi kon syönyt kivi, ja muuten false
      */
     
     public boolean naapuriOnKoKivi(int x, int y) {
@@ -534,11 +604,34 @@ public class Pelilauta {
         return kuolleeksiMerkitytRyhmat.contains(ryhmanNumero);
     }
     
+    /**
+     * Metodi laittaa seuraavaksi siirroksi passauksen
+     */
     
     public void passaa() {
         int[] siirto = {-1,-1,0};
         siirrot.add(siirto);
         viimeisinSiirtoOliKonSyonti = false;
+    }
+    
+    /**
+     * Metodi palauttaa Pelilaudan, jonka tilanne on sama kuin ennen viimeisintä
+     * siirtoa
+     * 
+     * @return Pelilauta, jonka tilanne on sama kuin ennen viimeisintä siirtoa
+     */
+    
+    public Pelilauta palautaEdellisenSiirronTilanne() {
+        Pelilauta edellisenSiirronTilanne = new Pelilauta(pituus,leveys);
+        for (int i = 0; i<siirrot.size()-1; i++) {
+            int[] siirto = siirrot.get(i);
+            int siirronRivi = siirto[0];
+            int siirronSarake = siirto[1];
+            int siirronVari = siirto[2];
+            if (siirronRivi == -1) edellisenSiirronTilanne.passaa();
+            else edellisenSiirronTilanne.laitaSiirto(siirronRivi,siirronSarake,siirronVari);
+        }
+        return edellisenSiirronTilanne;
     }
     
    

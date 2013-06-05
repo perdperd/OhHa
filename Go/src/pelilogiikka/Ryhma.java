@@ -9,15 +9,36 @@ package pelilogiikka;
  * kivien ja vapauksien lisäämisen ryhmiin sekä ryhmien yhdistämisen.
  * 
  * 
- * @author Prod
+ * @author Juuso Nyyssönen
  */
 
 import java.util.HashSet;
 
 public class Ryhma {
+    
+    /**
+     * Ryhmän kivien väri
+     */
+    
     private int vari;
+    
+    /**
+     * Ryhmän vapaudet laudalla sisältävä HashSet
+     */
+    
     private HashSet<String> vapaudet;
+    
+    /**
+     * Ryhmän kivet laudalla sisältävä HashSet
+     */
+    
     private HashSet<String> kivet;
+    
+    /**
+     * Luo annetun värisen ryhmän
+     * 
+     * @param vari Luotavan ryhmän väri
+     */
     
     public Ryhma(int vari) {
         this.vari = vari;

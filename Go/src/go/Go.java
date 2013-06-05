@@ -8,6 +8,8 @@ import kayttoliittyma.*;
 
 /**
  * Luokka, joka käynnistää ohjelman
+ * 
+ * @author Juuso Nyyssönen
  */
 public class Go {
 

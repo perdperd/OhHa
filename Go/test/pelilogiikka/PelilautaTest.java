@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Prod
+ * @author Juuso Nyyssönen
  */
 public class PelilautaTest {
     
