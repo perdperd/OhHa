@@ -42,3 +42,9 @@ Ajankäytön kohde: JavaDocien kirjoittaminen, sekvenssikaavioiden teko
 Käyttämä aika: ~4h
 
 Ajankäytön kohde: n. 3h koodausta ja 1h JavaDocien kirjoittamista
+
+6.6.2013
+
+Käyttämä aika: ~1h
+
+Ajankäytön kohde: 10 min koodausta, loput ajasta kaavioiden tekoa ja päivittämistä

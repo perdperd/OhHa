@@ -5,6 +5,7 @@
 package kayttoliittyma;
 
 import pelilogiikka.*;
+import tiedostonkasittely.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -265,6 +266,9 @@ public class Pelikayttoliittyma {
         if (mustanPisteet > valkeanPisteet) System.out.println("Musta voitti " + (mustanPisteet-valkeanPisteet) + " pisteellä.");
         else if (mustanPisteet < valkeanPisteet) System.out.println("Valkea voitti " + (valkeanPisteet-mustanPisteet) + " pisteellä.");
         else System.out.println("Tasapeli!");
+        System.out.println("Tallennetaanko peli? k/e ");
+        String syote = input.nextLine();
+        if (syote.equals("k")) tallennaPeli();
     }
     
     /**
@@ -386,6 +390,25 @@ public class Pelikayttoliittyma {
                 viimeisinSiirto = viimeisimmänSiirronXKoordinaatti + "" + viimeisimmanSiirronYKoordinaatti;
             } else viimeisinSiirto = "";
             siirtojenMaara--;
+        }
+    }
+    
+    /**
+     * Metodi tallentaa pelin käyttäjän antamaan tiedostoon
+     */
+    
+    public void tallennaPeli() {
+        Pelitiedostonkasittelija tiedostonkasittelija = new Pelitiedostonkasittelija();
+        while (true) {
+            System.out.print("Anna tallennettavan tiedoston nimi: ");
+            String syote = input.nextLine();
+            if (!tiedostonkasittelija.tallennaPelattuPeli(pelilauta,syote)) {
+                System.out.println("Virhe tiedoston tallentamisessa, anna toinen nimi tiedostolle");
+            }
+            else { 
+                System.out.println("Peli tallennettu tiedostoon " + syote + " !");
+                break;
+            }
         }
     }
    
