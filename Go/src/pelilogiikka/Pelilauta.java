@@ -415,7 +415,7 @@ public class Pelilauta {
      */
     
     public boolean siirtoOnLaillinen(int x, int y, int vari) {
-        if (x < 0 || x >= pituus || y < 0 || y >= pituus) return false;
+        if (x < 0 || x >= pituus || y < 0 || y >= leveys) return false;
         if (lauta[x][y] != 0) return false;
         if (viimeisinSiirtoOliKonSyonti && naapuriOnKoKivi(x,y)) return false;
         return (siirtoSyoRyhmia(x, y, vari) || siirtoEiSyoRyhmiaMuttaOnLaillinen(x,y,vari));

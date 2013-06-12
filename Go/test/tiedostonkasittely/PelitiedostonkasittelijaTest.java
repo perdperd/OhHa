@@ -12,6 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import pelilogiikka.*;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -35,22 +36,18 @@ public class PelitiedostonkasittelijaTest {
     }
     
     @Test
-    public void pelitiedostonkasittelijaLukeeAiemminTallennetunPelinSiirrotOikein() {
+    public void tallennaPelattuPeliLuoOikeanNimisenTiedoston() {
         Pelilauta pelilauta = new Pelilauta(5,5);
         pelilauta.laitaSiirto(1,1,1);
-        pelilauta.laitaSiirto(2,1,-1);
-        pelilauta.passaa();
         kasittelija.tallennaPelattuPeli(pelilauta,"testi");
-        kasittelija.lataaTallennetunPelinSiirrot("testi");
-        ArrayList<int[]> ladatutSiirrot = kasittelija.getLadatunPelinSiirrot();
-        int[] ekaSiirto = ladatutSiirrot.get(0);
-        int[] tokaSiirto = ladatutSiirrot.get(1);
-        int[] kolmasSiirto = ladatutSiirrot.get(2);
-        boolean ladatutSiirrotOvatOikeat = true;
-        if (ekaSiirto[0] != 1 || ekaSiirto[1] != 1 || ekaSiirto[2] != 1) ladatutSiirrotOvatOikeat = false;
-        if (tokaSiirto[0] != 2 || tokaSiirto[1] != 1 || tokaSiirto[2] != -1) ladatutSiirrotOvatOikeat = false;
-        if (kolmasSiirto[0] != -1 || kolmasSiirto[1] != -1 || kolmasSiirto[2] != 0) ladatutSiirrotOvatOikeat = false;
-        assertEquals(true, ladatutSiirrotOvatOikeat);
+        File tallennettuTiedosto = new File("testi");
+        boolean tiedostoOnOlemassa = tallennettuTiedosto.exists();
+        assertEquals(true, tiedostoOnOlemassa);
+    }
+    
+    @Test
+    public void lataaTallennettuPeliLataaOikeanTiedoston() {
+        
     }
    
 }

@@ -17,6 +17,6 @@ public class Go {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Pelikayttoliittyma kayttoliittyma = new Pelikayttoliittyma();
+        Alkuvalikko alkuvalikko = new Alkuvalikko();
     }
 }

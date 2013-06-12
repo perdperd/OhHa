@@ -15,10 +15,22 @@ import pelilogiikka.*;
  */
 public class Pelitiedostonkasittelija {
     /**
+     * Ladatun pelin laudan pituus
+     */
+    
+    private int ladatunPelinLaudanPituus;
+    
+    /**
+     * Ladatun pelin laudan leveys
+     */
+    
+    private int ladatunPelinLaudanLeveys;
+    
+    /**
      * Ladatun pelin siirrot taulukkomuodossa sisältävä ArrayList.
      */
     
-    ArrayList<int[]> ladatunPelinSiirrot = new ArrayList<int[]>();
+    private ArrayList<int[]> ladatunPelinSiirrot = new ArrayList<int[]>();
     
     /**
      * Luo uuden pelitiedostonkäsittelijän.
@@ -28,12 +40,20 @@ public class Pelitiedostonkasittelija {
         
     }
     
+    public int getLadatunPelinLaudanPituus() {
+        return ladatunPelinLaudanPituus;
+    }
+    
+    public int getLadatunPelinLaudanLeveys() {
+        return ladatunPelinLaudanLeveys;
+    }
+    
     public ArrayList<int[]> getLadatunPelinSiirrot() {
         return ladatunPelinSiirrot;
     }
     
     /**
-     * Metodi yrittää tallentaa syötteenä annetun pelilaudan siirrot tiedostoon
+     * Metodi yrittää tallentaa syötteenä annetun pelilaudan koon ja siirrot tiedostoon
      * 
      * @param pelilauta Pelilauta, jonka siirtoja ollaan tallentamassa
      * @param tiedostonimi Sen tiedoston nimi, johon ollaan tallentamassa siirtoja
@@ -44,6 +64,9 @@ public class Pelitiedostonkasittelija {
         ArrayList<int[]> siirrot = pelilauta.getSiirrot();
         try {
             PrintWriter kirjoittaja = new PrintWriter(new File(tiedostonimi));
+            int pituus = pelilauta.getPituus();
+            int leveys = pelilauta.getLeveys();
+            kirjoittaja.println(pituus + " " + leveys);
             for (int[] siirto : siirrot) {
                 kirjoittaja.println(siirto[0]+ " " + siirto[1] + " " + siirto[2]);
             }
@@ -56,15 +79,19 @@ public class Pelitiedostonkasittelija {
     
     /**
      * Metodi yrittää ladata syötteenä annettua tiedoston nimeä vastaavan tiedoston
-     * sisältämät siirrot
+     * sisältämän laudan pituuden, laudan leveyden ja pelin siirrot
      * 
-     * @param ladattavanPelinTiedostonimi Sen tiedoston nimi, josta ollaan lataamassa siirtoja
-     * @return true, jos siirtojen lataaminen onnistui, ja muuten false
+     * @param ladattavanPelinTiedostonimi Sen tiedoston nimi, josta ollaan lataamassa peliä
+     * @return true, jos pelin lataaminen onnistui, ja muuten false
      */
     
-    public boolean lataaTallennetunPelinSiirrot(String ladattavanPelinTiedostonimi) {
+    public boolean lataaTallennettuPeli(String ladattavanPelinTiedostonimi) {
         try {
             Scanner lukija = new Scanner(new File(ladattavanPelinTiedostonimi));
+            String pituusJaLeveysStringina = lukija.nextLine();
+            String[] pituusJaLeveys = pituusJaLeveysStringina.split(" ");
+            ladatunPelinLaudanPituus = Integer.parseInt(pituusJaLeveys[0]);
+            ladatunPelinLaudanLeveys = Integer.parseInt(pituusJaLeveys[1]);
             while (lukija.hasNextLine()) {
             String siirtoStringina = lukija.nextLine();
             String[] siirronOsat = siirtoStringina.split(" ");

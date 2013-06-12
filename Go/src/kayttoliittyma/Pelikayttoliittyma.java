@@ -269,6 +269,7 @@ public class Pelikayttoliittyma {
         System.out.println("Tallennetaanko peli? k/e ");
         String syote = input.nextLine();
         if (syote.equals("k")) tallennaPeli();
+        else new Alkuvalikko();
     }
     
     /**
@@ -286,6 +287,8 @@ public class Pelikayttoliittyma {
         int[] syotettaVastaavatKoordinaatit = {-1,-1};
         if (syote.length() < 2 || syote.length() > 3) return syotettaVastaavatKoordinaatit;
         int syotteenXKoordinaatti = (int) Character.toUpperCase(syote.charAt(0)) - 65;
+        if (syotteenXKoordinaatti == 8 ) return syotettaVastaavatKoordinaatit;
+        else if (syotteenXKoordinaatti > 8) syotteenXKoordinaatti--;
         if (syotteenXKoordinaatti < 0 || syotteenXKoordinaatti >= leveys) return syotettaVastaavatKoordinaatit;
         if (!onKokonaisluku(syote.substring(1))) return syotettaVastaavatKoordinaatit;
         int syotteenYKoordinaatti = pituus - Integer.parseInt(syote.substring(1));
@@ -385,9 +388,9 @@ public class Pelikayttoliittyma {
             vuorossaOlevanPelaajanVari = -vuorossaOlevanPelaajanVari;
             if (pelilauta.getSiirtojenMaara() > 0) {
                 int[] viimeisinSiirtoTaulukkona = pelilauta.getSiirrot().get(pelilauta.getSiirtojenMaara()-1);
-                char viimeisimmänSiirronXKoordinaatti = (char) (viimeisinSiirtoTaulukkona[1] + 65);
+                char viimeisimmanSiirronXKoordinaatti = (char) (viimeisinSiirtoTaulukkona[1] + 65);
                 char viimeisimmanSiirronYKoordinaatti = (char) viimeisinSiirtoTaulukkona[0];
-                viimeisinSiirto = viimeisimmänSiirronXKoordinaatti + "" + viimeisimmanSiirronYKoordinaatti;
+                viimeisinSiirto = viimeisimmanSiirronXKoordinaatti + "" + viimeisimmanSiirronYKoordinaatti;
             } else viimeisinSiirto = "";
             siirtojenMaara--;
         }
@@ -407,6 +410,7 @@ public class Pelikayttoliittyma {
             }
             else { 
                 System.out.println("Peli tallennettu tiedostoon " + syote + " !");
+                new Alkuvalikko();
                 break;
             }
         }

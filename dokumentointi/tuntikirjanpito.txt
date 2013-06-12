@@ -48,3 +48,9 @@ Ajankäytön kohde: n. 3h koodausta ja 1h JavaDocien kirjoittamista
 Käyttämä aika: ~1h
 
 Ajankäytön kohde: 10 min koodausta, loput ajasta kaavioiden tekoa ja päivittämistä
+
+12.6.2013
+
+Käyttämä aika: ~3h
+
+Ajankäytön kohde: Läpikäynnin koodaamista
