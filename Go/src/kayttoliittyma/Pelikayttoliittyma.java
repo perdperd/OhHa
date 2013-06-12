@@ -84,8 +84,8 @@ public class Pelikayttoliittyma {
         System.out.println("Anna laudan leveys: ");
         leveys = palautaKaypaPelaajanSyote(2,19, "Leveyden");
         pelilauta = new Pelilauta(pituus,leveys);
-        System.out.println("Anna tasoituskivien määrä: ");
-        tasoitusKivet = palautaKaypaPelaajanSyote(0,9, "Tasoituskivien määrän");
+        System.out.println("Anna tasoituskivien maara: ");
+        tasoitusKivet = palautaKaypaPelaajanSyote(0,9, "Tasoituskivien maaran");
         if (tasoitusKivet > 0) vuorossaOlevanPelaajanVari = -1;
         else vuorossaOlevanPelaajanVari = 1;
         lauta = pelilauta.getLauta();
@@ -110,12 +110,12 @@ public class Pelikayttoliittyma {
             if (onKokonaisluku(syote)) {
                int luku = Integer.parseInt(syote);
                 if (luku < alaraja || luku > ylaraja) {
-                    System.out.println(syotteenTyyppi + " tulee olla kokonaisluku väliltä " + alaraja + "-" + ylaraja + "!");
+                    System.out.println(syotteenTyyppi + " tulee olla kokonaisluku valilta " + alaraja + "-" + ylaraja + "!");
                 }
                 else return luku;
             }
           
-            else System.out.println(syotteenTyyppi + " tulee olla kokonaisluku väliltä " + alaraja + "-" + ylaraja + "!");
+            else System.out.println(syotteenTyyppi + " tulee olla kokonaisluku valilta " + alaraja + "-" + ylaraja + "!");
         }
     }
     
@@ -232,8 +232,8 @@ public class Pelikayttoliittyma {
     public void merkkaaKuolleetRyhmat() {
         while (true) {
             tulostaLauta();
-            System.out.println("\"pisteyta\" pisteyttää pelin ja \"peruuta\" palaa takaisin peliin.");
-            System.out.print("Anna kuolleeksi tai eläväksi merkittävän ryhmän jonkun kiven koordinaatti: ");
+            System.out.println("\"pisteyta\" pisteyttaa pelin ja \"peruuta\" palaa takaisin peliin.");
+            System.out.print("Anna kuolleeksi tai elavaksi merkittävän ryhman jonkun kiven koordinaatti: ");
             String syote = input.nextLine();
             if (syote.equals("pisteyta")) {
                 pisteytaPeli();
@@ -245,10 +245,10 @@ public class Pelikayttoliittyma {
                 break;
             }
             if (koitaMerkitaRyhmaKuolleeksi(syote)) { 
-                System.out.println("Merkitty ryhmä " + syote + " kuolleeksi.");
+                System.out.println("Merkitty ryhma " + syote + " kuolleeksi.");
             }
-            else if (koitaMerkitaRyhmaElavaksi(syote)) System.out.println("Merkitty ryhmä " + syote + " eläväksi");
-            else System.out.println("Syöte oli virheellinen. Koordinaatin tulee olla muotoa kirjain-numero, esimerkiksi a3 tai b5.");
+            else if (koitaMerkitaRyhmaElavaksi(syote)) System.out.println("Merkitty ryhma " + syote + " elavaksi");
+            else System.out.println("Syote oli virheellinen. Koordinaatin tulee olla muotoa kirjain-numero, esimerkiksi a3 tai b5.");
         }
 }
     
@@ -263,8 +263,8 @@ public class Pelikayttoliittyma {
         int mustanPisteet = pisteyttaja.getMustanPisteet();
         int valkeanPisteet = pisteyttaja.getValkeanPisteet();
         System.out.println("Mustan pisteet: " + mustanPisteet + " Valkean pisteet: " + valkeanPisteet);
-        if (mustanPisteet > valkeanPisteet) System.out.println("Musta voitti " + (mustanPisteet-valkeanPisteet) + " pisteellä.");
-        else if (mustanPisteet < valkeanPisteet) System.out.println("Valkea voitti " + (valkeanPisteet-mustanPisteet) + " pisteellä.");
+        if (mustanPisteet > valkeanPisteet) System.out.println("Musta voitti " + (mustanPisteet-valkeanPisteet) + " pisteella.");
+        else if (mustanPisteet < valkeanPisteet) System.out.println("Valkea voitti " + (valkeanPisteet-mustanPisteet) + " pisteella.");
         else System.out.println("Tasapeli!");
         System.out.println("Tallennetaanko peli? k/e ");
         String syote = input.nextLine();
@@ -409,7 +409,7 @@ public class Pelikayttoliittyma {
                 System.out.println("Virhe tiedoston tallentamisessa, anna toinen nimi tiedostolle");
             }
             else { 
-                System.out.println("Peli tallennettu tiedostoon " + syote + " !");
+                System.out.println("Peli tallennettu tiedostoon " + syote + "!");
                 new Alkuvalikko();
                 break;
             }

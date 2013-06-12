@@ -15,7 +15,7 @@ public class Alkuvalikko {
     public Alkuvalikko() {
     Scanner input = new Scanner(System.in);
     while (true) {
-        System.out.println("\"pelaa\" aloittaa uuden pelin, \"lapikay\" siirtyy pelin läpikäyntiin ja \"lopeta\" lopettaa");
+        System.out.println("\"pelaa\" aloittaa uuden pelin, \"lapikay\" siirtyy pelin lapikayntiin ja \"lopeta\" lopettaa");
         String syote = input.nextLine();
         if (syote.equals("pelaa")) {
             Pelikayttoliittyma kayttoliittyma = new Pelikayttoliittyma();
