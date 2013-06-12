@@ -112,7 +112,10 @@ public class Lapikayntikayttoliittyma {
             System.out.println("Siirto " + siirronNumero);
             System.out.println("\"s\" siirtyy seuraavaan siirtoon, \"e\" edelliseen ja \"lopeta\" lopettaa");
             String syote = input.nextLine();
-            if (syote.equals("lopeta")) break;
+            if (syote.equals("lopeta")) {
+                new Alkuvalikko();
+                break;
+            }
             if (syote.equals("s")) {
                 if (siirronNumero < lapikayntilauta.getSiirtojenMaara()-1) siirronNumero++;
             }
