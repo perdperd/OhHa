@@ -113,14 +113,14 @@ public class LapikayntilautaTest {
     }
     
     @Test
-    public void getSiirronNumeroPalauttaaMiinusYhdenJosSiirtoaEiPelattuLadatussaPelissä() {
+    public void getSiirronNumeroPalauttaaMiinusYhdenJosSiirtoaEiPelattuLadatussaPelissa() {
         int[] koordinaatit = {4,4};
         int siirronNumero = lapikayntilauta.getSiirronNumero(koordinaatit);
         assertEquals(-1,siirronNumero);
     }
     
     @Test
-    public void getSiirronNumeroPalauttaaOikeanSiirronNumeronJosSiirtoPelattiinLadatussaPelissä() {
+    public void getSiirronNumeroPalauttaaOikeanSiirronNumeronJosSiirtoPelattiinLadatussaPelissa() {
         int[] koordinaatit = {8,7};
         int siirronNumero = lapikayntilauta.getSiirronNumero(koordinaatit);
         assertEquals(2,siirronNumero);
