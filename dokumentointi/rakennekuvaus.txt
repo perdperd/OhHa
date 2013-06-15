@@ -1,0 +1,19 @@
+Pääpelilogiikan toteutuksesta vastaa Pelilauta-luokka. Se sisältää mielivaltaisen määrän Ryhmä-luokan olioita.
+Ryhmä-luokka esittää laudalla sijaitsevaa kivistä muodostuvaa ryhmää. Pelilauta luo ryhmiä laudalle, lisäilee niille kiviä ja vapauksia,
+poistaa ryhmiä laudalta, tutkii siirtojen laillisuudet ja laittaa siirtoja laudalle. Se hoitaa siis gon pelaamisen liittyvän logiikan.
+
+Läpikäyntilauta, Pelitiedostonkäsittelijä ja Pisteyttäjä ovat kaikki Pelilautaa käyttäviä luokkia. Läpikäyntilauta hoitaa
+tallennetun pelin läpikäymiseen vaadittavan logiikan, Pelitiedostonkäsittelijä hoitaa pelattujen pelin tallennuksen ja tallennettujen
+pelien latauksen ja Pisteyttäjä hoitaa pelilaudan tilanteen pisteytyksen pelin loputtua. Lisäksi Läpikäyntilauta käyttää Pelitiedoston-
+käsittelijää itsensä luomiseen.
+
+Main aloittaa ohjelman luomalla Alkuvalikko-luokan olion. Alkuvalikko on yksinkertainen tekstipohjainen valikko. Alkuvalikko
+luo käyttäjän syötteen mukaan joko Pelikäyttöliittymän tai Läpikäyntikäyttöliittymän. Pelikäyttöliittymä on tekstipohjainen
+käyttöliittymä gon pelaamisen kahden pelaajan kesken ja läpikäyntikäyttöliittymä on tekstipohjainen käyttöliittymä tallennettujen
+pelien läpikäymiseen jälkikäteen. Läpikäyntikäyttöliittymä käyttää Pelitiedostonkäsittelijää pelien lataamiseen ja Pelikäyttöliittymä
+pelien tallentamiseen. Lisäksi Läpikäyntikäyttöliittymä sisältää Läpikäyntilaudan itse pelin läpikäymistä varten ja Pelikäyttöliittymä
+sisältää Pelilaudan pelaamista varten. Lisäksi Pelikäyttöliittymä käyttää Pisteyttäjää pelin pisteytykseen.
+
+Pelikäyttöliittymä ja Läpikäyntikäyttöliittymä ovat luokan Tekstikäyttöliittymä aliluokkia. Tekstikäyttöliittymä on runko
+tekstipohjaiselle go-käyttöliittymälle ja sisältää syötteiden tarkistukseen ja laudan tulostamiseen liittyviä metodeja.
+

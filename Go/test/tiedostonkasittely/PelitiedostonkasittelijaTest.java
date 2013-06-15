@@ -33,6 +33,14 @@ public class PelitiedostonkasittelijaTest {
     
     @After
     public void tearDown() {
+        File tallennettuPeli = new File("testi");
+        tallennettuPeli.deleteOnExit();
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+        File tallennettuPeli = new File("testi");
+        tallennettuPeli.delete();
     }
     
     @Test
@@ -46,8 +54,50 @@ public class PelitiedostonkasittelijaTest {
     }
     
     @Test
-    public void lataaTallennettuPeliLataaOikeanTiedoston() {
-        
+    public void lataaTallennettuPeliLataaValmiinEsimerkkitiedostonPelilaudanPituudenJaLeveydenOikein() {
+        kasittelija.lataaTallennettuPeli("esimerkkipeli");
+        int pituus = kasittelija.getLadatunPelinLaudanPituus();
+        int leveys = kasittelija.getLadatunPelinLaudanLeveys();
+        boolean latasiOikein = true;
+        if (pituus != 10) latasiOikein = false;
+        if (leveys != 11) latasiOikein = false;
+        assertEquals(true, latasiOikein);
     }
-   
+    
+    @Test
+    public void lataaTallennettuPeliLataaValmiinEsimerkkitiedostonSiirrotOikein() {
+        kasittelija.lataaTallennettuPeli("esimerkkipeli");
+        ArrayList<int[]> siirrot = kasittelija.getLadatunPelinSiirrot();
+        int[] siirto1 = siirrot.get(0);
+        int[] siirto2 = siirrot.get(1);
+        int[] siirto3 = siirrot.get(2);
+        boolean latasiOikein = true;
+        if (siirrot.size() != 3) latasiOikein = false;
+        if (siirto1[0] != 2 || siirto1[1] != 2 || siirto1[2] != 1) latasiOikein = false;
+        if (siirto2[0] != 8 || siirto2[1] != 7 || siirto2[2] != -1) latasiOikein = false;
+        if (siirto3[0] != -1 || siirto3[1] != -1 || siirto3[2] != 0) latasiOikein = false;
+        assertEquals(true, latasiOikein);
+    }
+    
+    @Test
+    public void tallennaPelattuPeliTallentaaPelinOikeassaMuodossa() {
+         Pelilauta pelilauta = new Pelilauta(5,4);
+        pelilauta.laitaSiirto(1,1,1);
+        pelilauta.laitaSiirto(2,1,-1);
+        pelilauta.passaa();
+        kasittelija.tallennaPelattuPeli(pelilauta,"testi");
+        kasittelija.lataaTallennettuPeli("testi");
+        int pituus = kasittelija.getLadatunPelinLaudanPituus();
+        int leveys = kasittelija.getLadatunPelinLaudanLeveys();
+        ArrayList<int[]> ladatutSiirrot = kasittelija.getLadatunPelinSiirrot();
+        int[] ekaSiirto = ladatutSiirrot.get(0);
+        int[] tokaSiirto = ladatutSiirrot.get(1);
+        int[] kolmasSiirto = ladatutSiirrot.get(2);
+        boolean tallennettuOikein = true;
+        if (pituus != 5 || leveys != 4) tallennettuOikein = false;
+        if (ekaSiirto[0] != 1 || ekaSiirto[1] != 1 || ekaSiirto[2] != 1) tallennettuOikein = false;
+        if (tokaSiirto[0] != 2 || tokaSiirto[1] != 1 || tokaSiirto[2] != -1) tallennettuOikein = false;
+        if (kolmasSiirto[0] != -1 || kolmasSiirto[1] != -1 || kolmasSiirto[2] != 0) tallennettuOikein = false;
+        assertEquals(true, tallennettuOikein);
+    }
 }

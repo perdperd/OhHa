@@ -4,15 +4,13 @@
  */
 package pelilogiikka;
 
+import java.util.HashSet;
+
 /**
- * Luokka esittää laudalla sijaitsevista kivistä muodostuvaa ryhmää ja mahdollistaa
- * kivien ja vapauksien lisäämisen ryhmiin sekä ryhmien yhdistämisen.
- * 
+ * Luokka esittää laudalla sijaitsevista kivistä muodostuvaa ryhmää
  * 
  * @author Juuso Nyyssönen
  */
-
-import java.util.HashSet;
 
 public class Ryhma {
     

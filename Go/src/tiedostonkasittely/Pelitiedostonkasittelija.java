@@ -73,7 +73,7 @@ public class Pelitiedostonkasittelija {
             kirjoittaja.close();
         } catch (Exception e) {
             return false;
-        }
+        } 
         return true;
     }
     
@@ -101,6 +101,7 @@ public class Pelitiedostonkasittelija {
             int[] siirto = {siirronRivi, siirronSarake, siirronVari};
             ladatunPelinSiirrot.add(siirto);
             }
+            lukija.close();
         } catch (Exception e) {
             return false;
         }

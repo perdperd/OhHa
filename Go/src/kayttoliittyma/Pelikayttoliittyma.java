@@ -15,18 +15,7 @@ import java.util.ArrayList;
  *
  * @author Juuso Nyyssönen
  */
-public class Pelikayttoliittyma {
-    /**
-     * Pelilaudan pituus
-     */
-    
-    private int pituus;
-    
-    /**
-     * Pelilaudan leveys
-     */
-    
-    private int leveys;
+public class Pelikayttoliittyma extends Tekstikayttoliittyma {
     
     /**
      * Pelilauta, jolla pelataan
@@ -103,7 +92,6 @@ public class Pelikayttoliittyma {
      */
     
     public int palautaKaypaPelaajanSyote(int alaraja, int ylaraja, String syotteenTyyppi) {
-        Scanner input = new Scanner(System.in);
         
         while (true) {
             String syote = input.nextLine();
@@ -114,65 +102,11 @@ public class Pelikayttoliittyma {
                 }
                 else return luku;
             }
-          
             else System.out.println(syotteenTyyppi + " tulee olla kokonaisluku valilta " + alaraja + "-" + ylaraja + "!");
         }
     }
     
-    /**
-     * Metodi tutkii, onko käyttäjän syöte kokonaisluku
-     * 
-     * @param syote Käyttäjän antama syöte
-     * @return true, jos annettu syöte on kokonaisluku ja muuten false
-     */
-    
-    public boolean onKokonaisluku(String syote) {
-        try { 
-        Integer.parseInt(syote); 
-    } catch(NumberFormatException e) { 
-        return false; 
-    }
-        return true;
-    }
-    
-    /**
-     * Metodi tulostaa tämänhetkisen pelilaudan tilanteen
-     */
-    
-    public void tulostaLauta() {
-        tulostaKirjaimet();
-        for (int i = 0; i<pituus; i++) {
-            tulostaRivi(i);
-        }
-        tulostaKirjaimet();
-    }
-    
-    /**
-     * Metodi tulostaa laudan sarakkeiden koordinaatteja vastaavat kirjaimet
-     */
-    
-    public void tulostaKirjaimet() {
-        int valilyontienMaara = 0;
-        if (pituus >= 10) valilyontienMaara = 3;
-        else valilyontienMaara = 2;
-        for (int i = 0; i<valilyontienMaara; i++) {
-            System.out.print(" ");
-        }
-        System.out.print("A");
-        for (int i = 1; i<this.leveys; i++) {
-            int kirjaimenNumero = (int) ('A' + i);
-            if (i >= 8) kirjaimenNumero++;
-            System.out.print(" " + (char) kirjaimenNumero);
-        }
-        System.out.println();
-    }
-    
-    /**
-     * Metodi tulostaa syötteenä annetun laudan rivin
-     * 
-     * @param rivi Se laudan rivi, jota ollaan tulostamassa
-     */
-    
+    @Override
     public void tulostaRivi(int rivi) {
         if (pituus < 10 || pituus-rivi >= 10) System.out.print(pituus-rivi);
         else System.out.print(" " + (pituus-rivi));
@@ -191,6 +125,8 @@ public class Pelikayttoliittyma {
      */
     
     public void pelaa() {
+        System.out.println(pituus);
+        System.out.println(leveys);
         while (true) {
             tulostaLauta();
             if (tasoitusKivet > 0) {
@@ -202,11 +138,15 @@ public class Pelikayttoliittyma {
                 int mustanVangit = pelilauta.getMustanVangit();
                 int valkeanVangit = pelilauta.getValkeanVangit();
                 System.out.println("Mustan vangit: " + mustanVangit + " Valkean vangit: " + valkeanVangit);
-                System.out.println("\"pass\" passaa ja \"undo\" peruu edellisen siirron.");
+                System.out.println("\"pass\" passaa, \"undo\" peruu edellisen siirron ja \"luovuta\" luovuttaa.");
                 if (viimeisinSiirto.length() > 0) System.out.println("Viimeisin siirto: " + viimeisinSiirto);
                 if (vuorossaOlevanPelaajanVari == 1) System.out.print("Mustan vuoro: ");
                 else System.out.print("Valkean vuoro: ");
                 String siirto = input.nextLine();
+                if (siirto.equals("luovuta")) { 
+                    luovuta();
+                    break;
+                }
                 if (siirto.equals("pass")) {
                     pelilauta.passaa();
                     vuorossaOlevanPelaajanVari = -vuorossaOlevanPelaajanVari;
@@ -223,6 +163,15 @@ public class Pelikayttoliittyma {
                 else System.out.println("Siirto ei ole laillinen. Siirron tulee olla muotoa kirjain-numero, esimerkiksi a3 tai b5");    
             }
         }
+    }
+    
+    public void luovuta() {
+        if (vuorossaOlevanPelaajanVari == 1) System.out.println("Musta luovutti! Valkea voitti");
+        else System.out.println("Valkea luovutti! Musta voitti");
+        System.out.print("Tallennetaanko peli? k/e ");
+        String syote = input.nextLine();
+        if (syote.equals("k")) tallennaPeli();
+        else new Alkuvalikko();
     }
     
     /**
@@ -270,32 +219,6 @@ public class Pelikayttoliittyma {
         String syote = input.nextLine();
         if (syote.equals("k")) tallennaPeli();
         else new Alkuvalikko();
-    }
-    
-    /**
-     * Metodi palauttaa pelaajan syötettä vastaavat laudan koordinaatit, jos syöte
-     * ylipäätänsä vastaa jotain laudan koordinaatteja
-     * 
-     * @param syote Pelaajan antama syöte
-     * @return Kaksipaikkainen taulukko, jonka ensimmäinen luku on syötettä vastaava laudan rivi
-     * ja toinen syötettä vastaava laudan sarake. Jos syote ei ei vastannut mitään, kummatkin näistä
-     * ovat -1
-     */
-
-
-    public int[] palautaPelaajanSyotettaVastaavatLaudanKoordinaatit(String syote) {
-        int[] syotettaVastaavatKoordinaatit = {-1,-1};
-        if (syote.length() < 2 || syote.length() > 3) return syotettaVastaavatKoordinaatit;
-        int syotteenXKoordinaatti = (int) Character.toUpperCase(syote.charAt(0)) - 65;
-        if (syotteenXKoordinaatti == 8 ) return syotettaVastaavatKoordinaatit;
-        else if (syotteenXKoordinaatti > 8) syotteenXKoordinaatti--;
-        if (syotteenXKoordinaatti < 0 || syotteenXKoordinaatti >= leveys) return syotettaVastaavatKoordinaatit;
-        if (!onKokonaisluku(syote.substring(1))) return syotettaVastaavatKoordinaatit;
-        int syotteenYKoordinaatti = pituus - Integer.parseInt(syote.substring(1));
-        if (syotteenYKoordinaatti < 0 || syotteenYKoordinaatti >= pituus) return syotettaVastaavatKoordinaatit;
-        syotettaVastaavatKoordinaatit[0] = syotteenYKoordinaatti;
-        syotettaVastaavatKoordinaatit[1] = syotteenXKoordinaatti;
-        return syotettaVastaavatKoordinaatit;
     }
     
     /**
@@ -388,9 +311,10 @@ public class Pelikayttoliittyma {
             vuorossaOlevanPelaajanVari = -vuorossaOlevanPelaajanVari;
             if (pelilauta.getSiirtojenMaara() > 0) {
                 int[] viimeisinSiirtoTaulukkona = pelilauta.getSiirrot().get(pelilauta.getSiirtojenMaara()-1);
-                char viimeisimmanSiirronXKoordinaatti = (char) (viimeisinSiirtoTaulukkona[1] + 65);
-                char viimeisimmanSiirronYKoordinaatti = (char) viimeisinSiirtoTaulukkona[0];
-                viimeisinSiirto = viimeisimmanSiirronXKoordinaatti + "" + viimeisimmanSiirronYKoordinaatti;
+                char[] viimeisimmanSiirronXKoordinaatti = Character.toChars(viimeisinSiirtoTaulukkona[1] + 65);
+                if (viimeisinSiirtoTaulukkona[1] >= 8) viimeisimmanSiirronXKoordinaatti = Character.toChars(viimeisinSiirtoTaulukkona[1] + 66);
+                int viimeisimmanSiirronYKoordinaatti = pituus - viimeisinSiirtoTaulukkona[0];
+                viimeisinSiirto = viimeisimmanSiirronXKoordinaatti[0] + "" + viimeisimmanSiirronYKoordinaatti;
             } else viimeisinSiirto = "";
             siirtojenMaara--;
         }

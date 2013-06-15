@@ -7,8 +7,9 @@ package kayttoliittyma;
 import java.util.Scanner;
 
 /**
- *
- * @author Prod
+ * Luokka on ohjelman tekstipohjainen alkuvalikko
+ * 
+ * @author Juuso Nyyssönen
  */
 public class Alkuvalikko {
     

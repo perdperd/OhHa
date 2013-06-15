@@ -1,0 +1,35 @@
+Ohjelma tulee ajaa komentoriviltä, sillä käyttöliittymä on täysin tekstipohjainen. Ääkkösiä tai muita erikoismerkkejä sisältävien
+syötteiden syöttäminen ohjelmaan ei ole suotavaa. Kaikki ohjeessa myöhemmin mainitut komennot tulee kirjoittaa ohjelmaan ilman
+lainausmerkkejä.
+
+
+Aloittaessasi ohjelman päädyt alkuvalikkoon. Komento "pelaa" aloittaa uuden kahden pelaajan välisen pelin, "lapikay" aloittaa
+uuden aiemmin pelatun pelin läpikäynnin ja "lopeta" lopettaa ohjelman.
+
+Aloittaessasi uuden pelin ohjelma kysyy sinulta laudan pituutta, leveyttä ja tasoituskivien määrää. Laudan pituuden ja leveyden
+tulee olla kokonaislukuja väliltä 2-19 ja tasoituskivien määrän tulee olla väliltä 0-9. Jos pelissä on tasoituskiviä, musta asettaa
+ne laudalle pelin alussa, minkä jälkeen on valkean vuoro. Muussa tapauksessa pelin alkaessa on mustan vuoro.
+
+Kivi laitetaan laudalle antamalla laillisen siirron koordinaatit muodossa kirjain-numero, esimerkiksi a3 tai b5. Jos siirto ei
+ole laillinen tai syöte on väärää muotoa, mitään ei tapahdu. Komento "pass" passaa, "undo" ottaa edellisen siirron takaisin ja
+"luovuta" luovuttaa pelin. Peli päättyy kahden passauksen jälkeen ja tämän jälkeen alkaa pisteytys.
+
+Pisteytyksessä pelaajat joutuvat merkitsemään mahdolliset laudalla olevat kuolleet ryhmät. Tämä tehdään antamalla kuolleen ryhmän
+jonkin kiven koordinaatti muodossa kirjain-numero, esimerkiksi b4. Tällöin ohjelma merkitsee kohdassa olevan kiven ja kaikki siihen
+yhdistyneet kivet kuolleeksi. Jos annat jo kuolleeksi merkityn kiven koordinaatin, merkitään tämä kivi ja siihen yhdistyneet kivet
+eläviksi. Komento "pisteyta" pisteyttää pelin sen jälkeen, kun kuolleet kivet on merkitty. Komento "peruuta" palaa takaisin peliin.
+
+Pisteytyksen jälkeen tai toisen pelaajan luovutettua ohjelma ehdottaa sinulle pelin tallentamista. Komento "k" hyväksyy pelin
+tallentamisen. Tämän jälkeen joudut antamaan tallennettavalle pelitiedostolle nimen. Ohjelma kysyy sinulta nimeä, kunnes annat
+toimivan nimen.
+
+
+
+Aloittaessasi läpikäynnin ohjelma kysyy sinulta ladattavan tiedoston nimeä. Nimen täytyy olla jonkin aiemmin tallennetun
+pelitiedoston nimi. Annettuasi toimivan nimen siirrytään itse läpikäyntiin. Jos et haluakaan käydä jotain peliä läpi, komento
+"peruuta" palaa takaisin alkuvalikkoon.
+
+Läpikäynnissä komento "s" siirtyy seuraavaan siirtoon, "e" edelliseen siirtoon ja "lopeta" lopettaa läpikäynnin ja siirtyy
+takaisin alkuvalikkoon. Tämän lisäksi voit siirtyä tiettyyn siirtoon antamalla joko siirron numeron tai siirron koordinaatit.
+Koordinaattien tulee olla muodossa kirjain-numero, kuten aiemminkin. Ohjelma siirtyy tällöin siihen kohtaan, kun annettu siirto
+ensimmäisen kerran pelattiin.

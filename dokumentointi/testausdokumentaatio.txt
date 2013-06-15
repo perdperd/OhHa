@@ -1,0 +1,6 @@
+Kaikki ohjelman ulkoasuun liittyvä testaus jouduttiin hoitamaan käsin. Tarkastin esimerkiksi sen, että lauta tulostuu oikein ja
+että sen ympärillä olevat koordinaatit tulostuvat myös oikein. Erityisesti tarkastin, että ohjelma hyppää I-kirjaimen yli tulostaessa
+kirjaimia, sillä tämä on normi länsimaalaisissa go-piireissä. Lisäksi tarkastin, että viimeisin siirto tulostuu aina oikein.
+
+Tämän lisäksi varmistin vielä, että syötteiden tarkistus toimii niin kuin sen pitäisikin. Kokeilin monia erilaisia syötteitä, niin
+toimivia kuin myös epätoimivia.

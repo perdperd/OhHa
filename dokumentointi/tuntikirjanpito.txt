@@ -54,3 +54,9 @@ Ajankäytön kohde: 10 min koodausta, loput ajasta kaavioiden tekoa ja päivittämis
 Käyttämä aika: ~3h
 
 Ajankäytön kohde: Läpikäynnin koodaamista
+
+15.6.2013
+
+Käyttämä aika: ~4h
+
+Ajankäytön kohde: 3h koodaamista ja testien tekoa, 1h javadocia, kaavioiden tekoa ja muuta dokumentointia

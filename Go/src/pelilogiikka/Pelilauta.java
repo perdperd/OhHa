@@ -4,18 +4,15 @@
  */
 package pelilogiikka;
 
-/**
- * Luokka hoitaa itse pelaamisen liittyvän logiikan, johon kuuluvat ryhmien
- * luonti ja lisääminen laudalle, niiden yhdistely, kivien syöminen ja siirtojen 
- * laillisuuden tarkistus.
- * 
- * 
- * @author Juuso Nyyssönen
- */
-
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+/**
+ * Luokka hoitaa itse gon pelaamiseen liittyvän logiikan
+ * 
+ * @author Juuso Nyyssönen
+ */
 
 public class Pelilauta {
     /**

@@ -4,14 +4,14 @@
  */
 package pelilogiikka;
 
+import java.util.HashSet;
+import java.util.ArrayDeque;
+
 /**
- * Luokka hoitaa pelin pisteyttämisen sen loputtua.
+ * Luokka hoitaa pelin pisteyttämisen sen loputtua
  *
  * @author Juuso Nyyssönen
  */
-
-import java.util.HashSet;
-import java.util.ArrayDeque;
 
 public class Pisteyttaja {
     

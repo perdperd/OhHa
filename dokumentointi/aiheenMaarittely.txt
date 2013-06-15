@@ -9,7 +9,7 @@ Käyttäjät: pelaaja(t), pelin läpikäyjä
 Pelaajan toiminnot:
 
 - uuden pelin aloittaminen
-  - pelaaja valitsee laudan koon, mahdolliset tasoituskivet ja komin
+  - pelaaja valitsee laudan koon ja mahdolliset tasoituskivet
 
 - kiven laittaminen laudalle
 
