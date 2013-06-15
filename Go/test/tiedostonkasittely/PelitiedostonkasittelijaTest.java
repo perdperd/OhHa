@@ -34,15 +34,9 @@ public class PelitiedostonkasittelijaTest {
     @After
     public void tearDown() {
         File tallennettuPeli = new File("testi");
-        tallennettuPeli.deleteOnExit();
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-        File tallennettuPeli = new File("testi");
         tallennettuPeli.delete();
     }
-    
+
     @Test
     public void tallennaPelattuPeliLuoOikeanNimisenTiedoston() {
         Pelilauta pelilauta = new Pelilauta(5,5);
